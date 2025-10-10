@@ -50,6 +50,34 @@ app.post("/api/auth/register",async (req,res) =>{
   }
 })
 
+// POST /api/auth/login　ログイン
+
+app.post("/api/auth/login",async (req,res) => {
+  try{
+ const {username,password} = req.body
+ // データベースからユーザーを取得
+  const user = await prisma.user.findUnique({where:{
+    name:username
+  }})
+
+  if(!user){
+    return res.status(401).json({error:"ユーザーが見つかりません"})
+  }
+
+  // パスワードを比較
+  const isPasswordValid = await bcrypt.compare(password, user.password)
+
+  if(!isPasswordValid){
+    return res.status(401).send({error:"パスワードが正しくありません"})
+  }
+
+  res.send({message:"ログイン成功",userId:user.id})
+  }catch(error){
+    console.error("コンソールエラー",error)
+  } 
+})
+
+
 server.listen(3000, () => {
   console.log("http://localhost:3000");
 });
