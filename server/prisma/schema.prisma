@@ -25,3 +25,11 @@ model Contry{
   id Int @id @default(autoincrement())
   name String
 }
+
+model Room{
+  id Int @id @default(autoincrement())
+  name String
+  playerCount Int @default(1)
+  maxPlayer Int @default(4)
+  status String @default("waiting")
+}
