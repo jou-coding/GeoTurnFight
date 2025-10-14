@@ -16,5 +16,10 @@ export async function registerRoomHandler(socket:Socket,io: Server<DefaultEvents
         console.error("エラーが発生しています",error)
        }
     })
+
+        socket.on("leaveRoom",(roomName) => {
+        socket.leave(roomName) 
+        console.log(`${socket.id}が${roomName}から退出`)       
+    })
     
 }
