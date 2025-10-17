@@ -1,8 +1,13 @@
+import { BrowserRouter,Routes,Route } from "react-router-dom";
+import FirstScreen from "./pages/FirstScreen";
+
 function App() {
   return (
-    <>
-      <div className="text-xl text-blue-300">Hello World!!</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<FirstScreen />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
