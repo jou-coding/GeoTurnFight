@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateRoom:React.FC = () => {
+const Room:React.FC = () => {
     return(
         <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-8">
             <div className="w-full max-w-md transform translate-y-12 sm:translate-y-24 flex gap-5 items-center jusify-center flex flex-col gap-5">
@@ -12,4 +12,4 @@ const CreateRoom:React.FC = () => {
 
 }
 
-export default CreateRoom
+export default Room

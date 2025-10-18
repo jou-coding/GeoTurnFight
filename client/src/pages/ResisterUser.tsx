@@ -5,7 +5,7 @@ const ResisterUser:React.FC = () => {
     const navigate = useNavigate()
 
     const hanndleClick = () => {
-        navigate("/createRoom")
+        navigate("/Room")
     }
 
 

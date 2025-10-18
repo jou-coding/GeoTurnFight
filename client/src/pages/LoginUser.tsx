@@ -5,7 +5,7 @@ const LoginUser:React.FC = () => {
     const navigate = useNavigate()
 
     const hanndleClick = () => {
-        navigate("/createRoom")
+        navigate("/room")
     }
 
 
