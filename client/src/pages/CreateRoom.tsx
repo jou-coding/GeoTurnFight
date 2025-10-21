@@ -8,7 +8,7 @@ const CreateRoom = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">部屋のID入力</h2>
                 <form className="space-y-4">
                     <input type="text"  placeholder="部屋のID入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"/>
-                    <Button name="#" buttonName="決定"></Button>
+                    <Button name="/battle" buttonName="決定"></Button>
                 </form>
             </div>
             
