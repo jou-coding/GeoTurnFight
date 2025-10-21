@@ -5,6 +5,7 @@ import CreateRoom from "./pages/CreateRoom";
 import LoginUser from "./pages/LoginUser";
 import Room from "./pages/Room";
 import SearchRoom from "./pages/SearchRoom";
+import Battle from "./pages/Battle";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/room" element={<Room />} />
         <Route path="/createroom" element={<CreateRoom />} />
         <Route path="/searchroom" element={<SearchRoom />} />
+        <Route path="/battle" element={<Battle />} />
       </Routes>
     </BrowserRouter>
   );
