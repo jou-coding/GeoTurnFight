@@ -4,6 +4,7 @@ import ResisterUser from "./pages/ResisterUser";
 import CreateRoom from "./pages/CreateRoom";
 import LoginUser from "./pages/LoginUser";
 import Room from "./pages/Room";
+import SearchRoom from "./pages/SearchRoom";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/resisteruser" element={<ResisterUser />} />
         <Route path="/room" element={<Room />} />
         <Route path="/createroom" element={<CreateRoom />} />
+        <Route path="/searchroom" element={<SearchRoom />} />
       </Routes>
     </BrowserRouter>
   );
