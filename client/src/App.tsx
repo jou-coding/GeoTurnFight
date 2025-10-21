@@ -1,9 +1,10 @@
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import FirstScreen from "./pages/FirstScreen";
 import ResisterUser from "./pages/ResisterUser";
-import CreateRoom from "./pages/Room";
+import CreateRoom from "./pages/CreateRoom";
 import LoginUser from "./pages/LoginUser";
 import Room from "./pages/Room";
+
 
 function App() {
   return (
