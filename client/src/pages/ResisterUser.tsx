@@ -11,7 +11,7 @@ const ResisterUser:React.FC = () => {
                     <form className="space-y-4">
                         <input type="email" placeholder="メールアドレス" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
                         <input type="password" placeholder="パスワード" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
-                       <Button name="/room" />
+                       <Button name="/room" buttonName="登録"/>
                     </form>
                 </div>
             </div>
