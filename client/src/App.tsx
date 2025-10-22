@@ -7,6 +7,7 @@ import Room from "./pages/Room";
 import SearchRoom from "./pages/SearchRoom";
 import Battle from "./pages/Battle";
 import SendCountry from "./pages/SendCountry";
+import ResultScreen from "./pages/ResultScreen";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/searchroom" element={<SearchRoom />} />
         <Route path="/battle" element={<Battle />} />
         <Route path="/sendcountry" element={<SendCountry />} />
+        <Route path="/resultscreen" element={<ResultScreen />} />
       </Routes>
     </BrowserRouter>
   );
