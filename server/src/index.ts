@@ -1,10 +1,11 @@
 import Express from "express";
 import http from "http"
+import dotenv from "dotenv"
 import { authRouter } from "./features/auth/routes.js";
 import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./socket/server.js";
 
-
+dotenv.config()
 // Expressアプリの作成
 const app = Express();
 // HTTPサーバーを作成し、Expressを使う
