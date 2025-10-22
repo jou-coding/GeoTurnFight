@@ -8,7 +8,7 @@ const Battle = () => {
                 <Card />
                 <Card />
             </div>
-            <Button name="#" buttonName="決定"/>
+            <Button name="/sendcountry" buttonName="決定"/>
         </div>
 
     )

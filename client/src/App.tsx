@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes,Route } from "react-router-dom";
+import { BrowserRouter,Routes,Route} from "react-router-dom";
 import FirstScreen from "./pages/FirstScreen";
 import ResisterUser from "./pages/ResisterUser";
 import CreateRoom from "./pages/CreateRoom";
@@ -6,6 +6,7 @@ import LoginUser from "./pages/LoginUser";
 import Room from "./pages/Room";
 import SearchRoom from "./pages/SearchRoom";
 import Battle from "./pages/Battle";
+import SendCountry from "./pages/SendCountry";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/createroom" element={<CreateRoom />} />
         <Route path="/searchroom" element={<SearchRoom />} />
         <Route path="/battle" element={<Battle />} />
+        <Route path="/sendcountry" element={<SendCountry />} />
       </Routes>
     </BrowserRouter>
   );
