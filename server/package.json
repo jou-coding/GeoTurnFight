@@ -14,11 +14,11 @@
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
-    "prisma": "^6.17.0",
+    "prisma": "^6.18.0",
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.17.0",
+    "@prisma/client": "^6.18.0",
     "@prisma/extension-accelerate": "^2.0.2",
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",

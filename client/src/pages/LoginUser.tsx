@@ -4,9 +4,26 @@ import { Link, useNavigate } from "react-router-dom"
 const LoginUser:React.FC = () => {
     const navigate = useNavigate()
 
-    const hanndleClick = () => {
-        navigate("/room")
+ 
+
+    const handleLogin =async() => {
+        const res = await fetch("http://localhost:3000/api/auth/login",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({username:"player1",password:"123"})
+        }) 
+        
+        if(res.ok === true){
+            navigate("/room")
+        }else{
+            alert("ログイン失敗")
+        }
+
     }
+
+
+
+
 
 
     return(
@@ -18,7 +35,7 @@ const LoginUser:React.FC = () => {
                         <input type="email" placeholder="メールアドレス" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
                         <input type="password" placeholder="パスワード" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
                         <button type="button" 
-                        onClick={hanndleClick}
+                        onClick={() => handleLogin()}
                         className="w-full  bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition">送信</button>
                     </form>
                     <p className="text-center test-sm text-gray-500 mt-4">アカウントがありませんか？
