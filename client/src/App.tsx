@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<FirstScreen />} />
-        <Route path="/loginuser" element={<LoginUser />}></Route>
+        <Route path="/loginuser" element={<LoginUser />} />
         <Route path="/resisteruser" element={<ResisterUser />} />
         <Route path="/room" element={<Room />} />
         <Route path="/createroom" element={<CreateRoom />} />
