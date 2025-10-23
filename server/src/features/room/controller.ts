@@ -5,8 +5,6 @@ import { saveRoome,findFirst,findMany } from "./repository.js"
 export async function allRooms(req:Request,res:Response) {
     try{
         const allRoom  = await findMany()
-
-
         res.send({allroom:allRoom})
     }catch(error){
     console.error("Registration error:", error);
@@ -15,8 +13,6 @@ export async function allRooms(req:Request,res:Response) {
           error: "サーバーエラーが発生しました" 
         });
     }
-    
-
 }
 
 export async function findRoom(req:Request,res:Response) {
