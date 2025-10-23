@@ -10,7 +10,6 @@ export async function saveUser(name:string,password:string) {
       password: password,
     },
   });
-    
 }
 
 export async function findUser(name:string) {

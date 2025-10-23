@@ -8,8 +8,7 @@ export async function createUser(username: string, password: string) {
 
 export async function validateUser(username: string, password: string) {
   const user = await findUser(username);
-  
-  if (!user) return null;
+  if (!user ) return null;
   
   const isValid = await bcrypt.compare(password, user.password);
   return isValid ? user : null;

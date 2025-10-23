@@ -32,17 +32,20 @@ export async function register(req:Request,res:Response) {
 export async function login(req:Request,res:Response) {
      try{
      const {username,password} = req.body
-     // データベースからユーザーを取得
-      const user = validateUser(username,password)
+     // userネーム送られている
+     console.log("ユーザーネーム",username)
+     // パスワード送られれている
+     console.log("パスワード",password)
+
+
+      const user =  await validateUser(username,password)
+      console.log("userについて教えて",user)
     
       if(!user){
         return res.status(401).json({error:"認証が失敗しました。"})
-      }
-    
-    
-      res.send({status:true})
+      } 
+     res.send({status:true})
       }catch(error){
         console.error("コンソールエラー",error)
       } 
-    
 }
