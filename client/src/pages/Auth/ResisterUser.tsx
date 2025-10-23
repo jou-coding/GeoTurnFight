@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Button from "../components/Button"
+import Button from "../../components/Button"
 
 const ResisterUser:React.FC = () => {
     const [name_value,setNameValue] = useState("")

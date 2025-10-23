@@ -1,10 +1,10 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom";
 import FirstScreen from "./pages/FirstScreen";
-import ResisterUser from "./pages/ResisterUser";
-import CreateRoom from "./pages/CreateRoom";
-import LoginUser from "./pages/LoginUser";
-import Room from "./pages/Room";
-import SearchRoom from "./pages/SearchRoom";
+import ResisterUser from "./pages/Auth/ResisterUser";
+import CreateRoom from "./pages/Room/CreateRoom";
+import LoginUser from "./pages/Auth/LoginUser";
+import Room from "./pages/Room/Room";
+import SearchRoom from "./pages/Room/SearchRoom";
 import Battle from "./pages/Battle";
 import SendCountry from "./pages/SendCountry";
 import ResultScreen from "./pages/ResultScreen";
