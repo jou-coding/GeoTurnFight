@@ -16,18 +16,16 @@ export async function allRooms(req:Request,res:Response) {
 }
 
 export async function findRoom(req:Request,res:Response) {
-
     try{
          const {name} = req.body
           const room = await findFirst(name)
-         res.send({room:room})
-
+         res.send({room:room?.name})
     }catch(error){
         res.send({status:false})
     }
-   
-
 }
+
+
 export async function createRoom(req:Request,res:Response) {
     try{
 

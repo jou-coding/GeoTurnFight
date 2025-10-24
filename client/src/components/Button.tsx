@@ -14,8 +14,13 @@ const goto = useHandleNavigate()
   const handleClick = async () => {
     if (props.func) {
       const res = await props.func(); // async対応
-      if (res && res.ok) { // 成功したら遷移
-        goto(props.name);
+      const data = await res?.json()
+      if (res && res.ok ) { // 成功したら遷移
+        if(data.room){
+          goto(props.name);
+        }else{
+          alert("この部屋はありません")
+        }
       } else {
         console.error("登録に失敗しました:", res);
       }
