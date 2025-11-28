@@ -32,7 +32,7 @@ const  SendCountry:React.FC = () => {
                      value={country}
         onChange={(e) => setCountry(e.target.value)}
                     />
-                    <button onClick={checkCountry}>決定</button>
+                    <button className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700" onClick={checkCountry}>決定</button>
                     
                     <div className="border">
                         <h2 className="font-bold text-center">履歴</h2>
