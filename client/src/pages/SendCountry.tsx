@@ -1,25 +1,39 @@
-import { useState } from "react"
+import React, { useState } from "react"
 
+interface  country {
+    name:string
+}
 
 const correctCountryName = ["二ホン","カンコク","アメリカ"]
 
 const  SendCountry:React.FC = () => {
 
     const [country,setCountry] = useState("")
-    const [countryName,setCountryName] = useState([""])
+    const [countryName,setCountryName] = useState<country[]  >([])
 
     const checkCountry = () => {
         correctCountryName.forEach((value)=>{
             const num = value == country
             if(num){
                 console.log(value)
-                setCountryName([...countryName,value])
+                setCountryName([...countryName,{name:value}])
                 console.log("履歴",countryName)
             }
-        })
-
-        
+        })        
     }
+
+    
+    const rireki = () => {
+            return(
+            <>
+                {countryName.map((value) => {
+                    return  <div className="text-center">{value.name}</div>
+            })}
+                
+            </>
+            )
+            
+        }
 
     
 
@@ -36,9 +50,7 @@ const  SendCountry:React.FC = () => {
                     
                     <div className="border">
                         <h2 className="font-bold text-center">履歴</h2>
-                        
-                        <div className="text-center">###</div>
-                           <div className="text-center">###</div>
+                        {rireki()}
                     </div>
                 </div>
             </div>
