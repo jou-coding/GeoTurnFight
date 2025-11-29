@@ -61,7 +61,7 @@ const  SendCountry:React.FC = () => {
         const turnFunction = () => {
             return(
                 <>
-                {turn?<div className="text-center">{user01}</div>:<div className="text-center">{user02}</div>}
+                {turn?<div className="text-center">{user01}のターン</div>:<div className="text-center">{user02}のターン</div>}
                 </>
             )
         }
