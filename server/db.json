@@ -1,0 +1,11 @@
+{
+  "countries": [
+    { "id": 1, "name": "二ホン"},
+    { "id": 2, "name": "カンコク" },
+    { "id": 3, "name": "アメリカ" }
+  ],
+  "users": [
+    { "id": 1, "name": "Taro" },
+    { "id": 2, "name": "Hanako" }
+  ]
+}
