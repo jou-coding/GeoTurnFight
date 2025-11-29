@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useLocation } from "react-router-dom"
 
 interface  country {
     name:string
@@ -11,6 +12,15 @@ const  SendCountry:React.FC = () => {
     const [country,setCountry] = useState("")
     const [countryName,setCountryName] = useState<country[]  >([])
     const [turn,setTurn] = useState(true)
+    
+
+    // ユーザー情報
+      const location = useLocation();
+    const { user01, user02 } = (location.state || {}) as {
+    user01?: string;
+    user02?: string;
+  };
+
 
     //国名のチェック関数
     const checkCountry = () => {
@@ -51,7 +61,7 @@ const  SendCountry:React.FC = () => {
         const turnFunction = () => {
             return(
                 <>
-                {turn?<div className="text-center">君のターン</div>:<div className="text-center">相手のターン</div>}
+                {turn?<div className="text-center">{user01}</div>:<div className="text-center">{user02}</div>}
                 </>
             )
         }
