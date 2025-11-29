@@ -12,10 +12,21 @@ const  SendCountry:React.FC = () => {
     const [countryName,setCountryName] = useState<country[]  >([])
     const [turn,setTurn] = useState(true)
 
+    //国名のチェック関数
     const checkCountry = () => {
         correctCountryName.forEach((value)=>{
+            //　回答データ確認
             const num = value == country
-            if(num){
+
+            // 同じ回答か確認
+            let check_same_answer:boolean
+           check_same_answer =  countryName.some((value) => {
+                 return value.name == country
+            })
+
+            console.log(check_same_answer)
+
+            if(num && !check_same_answer ){
                 console.log(value)
                 setCountryName([...countryName,{name:value}])
                 console.log("履歴",countryName)
