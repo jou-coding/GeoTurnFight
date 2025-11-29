@@ -41,6 +41,7 @@ const  SendCountry:React.FC = () => {
                 setCountryName([...countryName,{name:value}])
                 console.log("履歴",countryName)
                 setTurn(!turn)
+                setCountry("")
             }
         })        
     }
