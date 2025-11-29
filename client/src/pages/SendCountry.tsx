@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
+import { io } from "socket.io-client"
 
 interface  country {
     name:string
@@ -13,6 +14,35 @@ const  SendCountry:React.FC = () => {
     const [countryName,setCountryName] = useState<country[]  >([])
     const [turn,setTurn] = useState(true)
     
+
+    // socket.ioの連携
+    useEffect(() => {
+        const socket = io("http://localhost:3000",{transports:["websocket","polling"]})
+
+        // 接続処理
+        socket.on("connect",()=>{
+            console.log("socket connected")
+            const data = {name:"ken"}
+            socket.emit("hello",data)
+            console.log(data)
+        })
+
+        //接続エラー
+        socket.on("connect_error",(error: any)=>{
+            console.error("接続エラー",error)
+        })
+
+        // 切断
+        socket.on("disconnect",(reason:any)=>{
+            console.log("切断",reason)
+        })
+
+        // クリーンアップ関数
+        return () => {
+            socket.disconnect()
+            console.log("Socket discconeted")
+        }
+    },[])
 
     // ユーザー情報
       const location = useLocation();

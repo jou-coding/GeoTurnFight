@@ -6,7 +6,7 @@ export function initSocketServer(server:http.Server<typeof http.IncomingMessage,
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",  // ← ここ！クライアントのポートを許可
+    origin: "http://localhost:5173", 
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -14,6 +14,10 @@ const io = new Server(server, {
 
 io.on("connection",(socket) =>{
     console.log("ClientのsocketIdは",socket.id)
+    // ここに、onやemitの処理を書く
+    socket.on("hello",(data) => {
+        console.log(data.name)
+    })
 
     // 各機能のハンドラーを登録する。
     registerRoomHandler(socket,io)
