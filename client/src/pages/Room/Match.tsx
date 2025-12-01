@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
-import Card from "../components/Card"
+
 import { useLocation, useNavigate } from "react-router-dom";
+import Card from "../../components/Card";
 
 type Props = {
   name: string;
