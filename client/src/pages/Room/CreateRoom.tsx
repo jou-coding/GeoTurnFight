@@ -1,5 +1,4 @@
 import { useContext, useState } from "react"
-import Button from "../../components/Button"
 import { RoomCotext } from "../../components/Provider"
 import type {Room}  from "../../components/Provider";
 import {io} from "socket.io-client"
@@ -45,13 +44,10 @@ const CreateRoom = () => {
             body:JSON.stringify({name:name_value})
         })
 
-        if(name_value == null){
-            return <div>値が入っていない</div>
+        // 問題かも
+        if(typeof(name_value) !== "string"){
+                setNameValue("値が入っていない")
         }
-
-        //　名前の記録
-        ChangeName(name_value)
-         
 
 
         return res
