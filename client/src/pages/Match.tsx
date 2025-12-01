@@ -14,8 +14,7 @@ type Props = {
 const Match = () => {
 
     const [card,setCard] = useState(false)
-    //user1
-    const [user1,setUser1] = useState("")
+    
     //userw2
     const [user2,setUser2] = useState("")
         
@@ -26,7 +25,6 @@ const Match = () => {
 
     useEffect(()=>{
         fetch("http://localhost:3001/users").then((res)=>res.json()).then((data)=> {
-            setUser1(data[0].name)
             setUser2(data[1].name)
             
         })
