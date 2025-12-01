@@ -4,15 +4,13 @@ import { Link, useNavigate } from "react-router-dom"
 const LoginUser:React.FC = () => {
     const navigate = useNavigate()
 
-         const [name_value,nameSetValue] = useState("") //　nameの状態
-         const [password_value,passwordSetValue] = useState("") // passwordの状態
+         const [name_value,nameSetValue] = useState("") 
+         const [password_value,passwordSetValue] = useState("") 
 
-        // 値の更新
         const nameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             nameSetValue(e.target.value) 
         }
-
-        // パスワードの更新
+        
         const passwordChange = (e:React.ChangeEvent<HTMLInputElement>) => {
             passwordSetValue(e.target.value)
         }
@@ -24,11 +22,9 @@ const LoginUser:React.FC = () => {
             body:JSON.stringify({username:name_value,password:password_value})
         }) 
 
-        console.log(res)
         
         if(res.ok === true){
             localStorage.setItem("username",name_value)
-            console.log(name_value)
             navigate("/room")
         }else{
             alert("ログイン失敗")
