@@ -3,9 +3,9 @@ import ResisterUser from "./pages/Auth/ResisterUser";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import Match from "./pages/Room/Match";
-import ResultScreen from "./pages/ResultScreen";
+import ResultScreen from "./pages/Room/ResultScreen";
 import Game from "./pages/Room/Game";
-import AppProvider from "./AppProvider";
+import AppProvider from "./pages/AppProvider";
 
 
 function App() {
