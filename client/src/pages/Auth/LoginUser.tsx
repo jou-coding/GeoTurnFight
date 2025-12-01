@@ -27,6 +27,8 @@ const LoginUser:React.FC = () => {
         console.log(res)
         
         if(res.ok === true){
+            localStorage.setItem("username",name_value)
+            console.log(name_value)
             navigate("/room")
         }else{
             alert("ログイン失敗")

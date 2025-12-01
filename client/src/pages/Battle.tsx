@@ -61,11 +61,15 @@ const Battle = () => {
         );
     };
 
+     let name = localStorage.getItem("username")
+    if(typeof(name) !== "string"){
+    name = "名無し"
+    }
 
     return(
         <div className="min-h-screen bg-gray-50 flex justify-center  items-center flex-col">
             <div className="w-full max-w-md space-y-4">
-                <Card title={user1}/>
+                <Card title={name}/>
                 <Card title={user2} />
             </div>
             {card ?
