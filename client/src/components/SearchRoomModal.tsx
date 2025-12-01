@@ -1,9 +1,11 @@
 import { useState } from "react"
 import Button from "./Button"
 
+type Props = {
+    onClose:() =>  void
+}
 
-
-export const SearchRoomModal:React.FC = () => {
+export const SearchRoomModal:React.FC<Props> = ({onClose}) => {
     const [roomName,setRoomName] = useState("")
 
     const  changeRoomName = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +32,7 @@ export const SearchRoomModal:React.FC = () => {
                     <form className="space-y-4">
                         <input type="text" value={roomName} onChange={changeRoomName} placeholder="部屋のID入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"/>
                         <Button name={`/Match?roomName=${roomName}`} buttonName="決定" func={SearchRoom} />
+                        <button className=" p-2 bg-blue-500 hover:bg-blue-700 shadow-lg rounded-lg" onClick={onClose}>戻る</button>
                     </form>
                 </div>
             </div>

@@ -12,7 +12,7 @@ const Room:React.FC = () => {
                 <button className=" px-12 py-6 bg-blue-300 rounded-lg hover:bg-blue-400" onClick={() => setModal(true)}>部屋に参加</button>
                 <Link to="/createroom" className="px-12 py-6 bg-blue-300 hover:bg-blue-400 rounded-lg transition duration-300 ">部屋を作る</Link>
             </div>
-            {modal && (<SearchRoomModal/>)}
+            {modal && (<SearchRoomModal onClose={() => setModal(false)}/>)}
         </div>
     )
 
