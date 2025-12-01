@@ -21,7 +21,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginUser />} />
-          <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
           <Route path="/Match" element={<Match />} />
