@@ -3,7 +3,6 @@ import ResisterUser from "./pages/Auth/ResisterUser";
 import CreateRoom from "./pages/Room/CreateRoom";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
-import SearchRoom from "./pages/Room/SearchRoom";
 import Match from "./pages/Match";
 import ResultScreen from "./pages/ResultScreen";
 import Provider from "./components/Provider"
@@ -27,7 +26,6 @@ function App() {
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
           <Route path="/createroom" element={<CreateRoom />} />
-          <Route path="/searchroom" element={<SearchRoom />} />
           <Route path="/Match" element={<Match />} />
           <Route path="/Game" element={<Game />} />
           <Route path="/resultscreen" element={<ResultScreen />} />
