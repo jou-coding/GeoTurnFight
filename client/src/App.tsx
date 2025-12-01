@@ -1,5 +1,4 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom";
-import FirstScreen from "./pages/FirstScreen";
 import ResisterUser from "./pages/Auth/ResisterUser";
 import CreateRoom from "./pages/Room/CreateRoom";
 import LoginUser from "./pages/Auth/LoginUser";
@@ -23,7 +22,7 @@ function App() {
     <Provider >
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<FirstScreen />} />
+          <Route path="/" element={<LoginUser />} />
           <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
