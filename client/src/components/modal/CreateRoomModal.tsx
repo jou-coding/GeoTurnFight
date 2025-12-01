@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
-import Button from "../Button"
 import { RoomCotext, type Room } from "../Provider"
 import { socket } from "../../App"
+import { Link } from "react-router-dom"
 
 type Props = {
     onClose:() =>  void
@@ -52,8 +52,11 @@ export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
                     <h2 className="text-2xl font-bold text-center mb-6">部屋のID入力</h2>
                     <form className="space-y-4">
                         <input type="text" value={nameValue} onChange={handleChange} placeholder="部屋のID入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"/>
-                        <Button name={`/Match?roomName=${nameValue}`} buttonName="決定" func={sendRoomName} />
+                        <div className="flex gap-3">
+                            <Link to={`/Match?roomName=${nameValue}`}><button className=" p-2 bg-blue-500 hover:bg-blue-700 shadow-lg rounded-lg" onClick={sendRoomName} >決定</button></Link>
                         <button className=" p-2 bg-blue-500 hover:bg-blue-700 shadow-lg rounded-lg" onClick={onClose}>戻る</button>
+                        </div>
+                        
                     </form>
                 </div>
             </div>
