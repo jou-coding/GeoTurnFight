@@ -1,6 +1,5 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom";
 import ResisterUser from "./pages/Auth/ResisterUser";
-import CreateRoom from "./pages/Room/CreateRoom";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import Match from "./pages/Match";
