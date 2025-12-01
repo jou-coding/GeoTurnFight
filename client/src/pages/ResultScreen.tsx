@@ -8,7 +8,7 @@ const ResultScreen = () => {
                 <div className="font-bold text-center text-3xl">勝利</div>
                 <div className="flex flex-row gap-2">
                     <Button name="/Room" buttonName="終了"/>
-                        <Button name="/battle" buttonName="もう一度" /> 
+                        <Button name="/Match" buttonName="もう一度" /> 
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ import CreateRoom from "./pages/Room/CreateRoom";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import SearchRoom from "./pages/Room/SearchRoom";
-import Battle from "./pages/Battle";
+import Match from "./pages/Match";
 import SendCountry from "./pages/SendCountry";
 import ResultScreen from "./pages/ResultScreen";
 import Provider from "./components/Provider"
@@ -29,7 +29,7 @@ function App() {
           <Route path="/room" element={<Room />} />
           <Route path="/createroom" element={<CreateRoom />} />
           <Route path="/searchroom" element={<SearchRoom />} />
-          <Route path="/battle" element={<Battle />} />
+          <Route path="/Match" element={<Match />} />
           <Route path="/sendcountry" element={<SendCountry />} />
           <Route path="/resultscreen" element={<ResultScreen />} />
         </Routes>

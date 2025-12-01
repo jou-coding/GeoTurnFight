@@ -11,7 +11,7 @@ type Props = {
 };
 
 
-const Battle = () => {
+const Match = () => {
 
     const [card,setCard] = useState(false)
     //user1
@@ -83,4 +83,4 @@ const Battle = () => {
     )
 }
 
-export default Battle
+export default Match
