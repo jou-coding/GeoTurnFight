@@ -68,12 +68,8 @@ const  Game:React.FC = () => {
                  return value.name == country
             })
 
-            console.log(check_same_answer)
-
             if(num && !check_same_answer ){
-                console.log(value)
                 setCountryName([...countryName,{name:value}])
-                console.log("履歴",countryName)
                 setTurn(!turn)
                 setCountry("")
             }
