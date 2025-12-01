@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { socket } from "../../App"
+import { useSocket } from "../../components/AppProvider"
+
+
 
 interface  country {
     name:string
@@ -14,7 +16,7 @@ const  Game:React.FC = () => {
     const [countryName,setCountryName] = useState<country[]  >([])
     const [turn,setTurn] = useState(true)
     
-    
+    const socket = useSocket()    
 
     // socket.ioの連携
    useEffect(() => {

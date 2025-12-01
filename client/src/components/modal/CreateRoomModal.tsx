@@ -1,18 +1,16 @@
-import { useContext, useState } from "react"
-import { RoomCotext, type Room } from "../Provider"
-import { socket } from "../../App"
+import {  useState } from "react"
+
 import { Link } from "react-router-dom"
+import { useSocket } from "../AppProvider"
+
 
 type Props = {
     onClose:() =>  void
 }
 
 export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
-       const roomContext:Room | null = useContext(RoomCotext)
-        if(roomContext == null){
-            return <div>エラーだよ</div>
-        }
-    
+
+        const socket = useSocket()
     
         const [nameValue,setNameValue] = useState<string>("")
     
@@ -24,11 +22,10 @@ export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
             
     
             // 接続成功時の処理
-            socket.on("connect",() => {
-                socket.emit("joinname",(socketID:string) => {
+            socket.emit("joinname",(socketID:string) => {
                     console.log(socketID)
                 })
-            })
+            
     
             // 接続失敗時のエラーハンドリング
             socket.on("connect_error",(error:unknown) => {
