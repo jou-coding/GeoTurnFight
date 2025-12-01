@@ -2,11 +2,11 @@ import { BrowserRouter,Routes,Route} from "react-router-dom";
 import ResisterUser from "./pages/Auth/ResisterUser";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
-import Match from "./pages/Match";
+import Match from "./pages/Room/Match";
 import ResultScreen from "./pages/ResultScreen";
 import Provider from "./components/Provider"
 import { io } from "socket.io-client";
-import Game from "./pages/Game";
+import Game from "./pages/Room/Game";
 
 // autoConnect true でOK
 export const socket = io("http://localhost:3000", {
