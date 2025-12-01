@@ -14,6 +14,7 @@ const  SendCountry:React.FC = () => {
     const [countryName,setCountryName] = useState<country[]  >([])
     const [turn,setTurn] = useState(true)
     
+    
 
     // socket.ioの連携
     useEffect(() => {
@@ -22,9 +23,9 @@ const  SendCountry:React.FC = () => {
         // 接続処理
         socket.on("connect",()=>{
             console.log("socket connected")
-            const data = {name:"ken"}
-            socket.emit("hello",data)
-            console.log(data)
+            const data = {name:user01}
+            socket.emit("joinRoom",data.name)
+            
         })
 
         //接続エラー
@@ -92,7 +93,7 @@ const  SendCountry:React.FC = () => {
         const turnFunction = () => {
             return(
                 <>
-                {turn?<div className="text-center">{user01}のターン</div>:<div className="text-center">{user02}のターン</div>}
+                {turn?<div  className="text-center">{user01}のターン</div>:<div className="text-center">{user02}のターン</div>}
                 </>
             )
         }

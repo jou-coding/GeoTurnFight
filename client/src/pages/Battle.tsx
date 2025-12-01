@@ -19,6 +19,8 @@ const Battle = () => {
     //userw2
     const [user2,setUser2] = useState("")
 
+    // roomId
+    const roomId = "room-1234"
 
     useEffect(()=>{
         fetch("http://localhost:3001/users").then((res)=>res.json()).then((data)=> {
@@ -33,7 +35,7 @@ const Battle = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(name, {
+        navigate(`${name}?roomId=${roomId}`, {
         state: {
             user01,
             user02,
