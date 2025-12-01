@@ -72,7 +72,7 @@ const Match = () => {
             </div>
             {card ?
   <Button
-    name="/SendCountry"
+    name="/Game"
     buttonName="決定"
     user01={name}
     user02={user2}

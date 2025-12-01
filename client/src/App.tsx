@@ -6,10 +6,10 @@ import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import SearchRoom from "./pages/Room/SearchRoom";
 import Match from "./pages/Match";
-import SendCountry from "./pages/SendCountry";
 import ResultScreen from "./pages/ResultScreen";
 import Provider from "./components/Provider"
 import { io } from "socket.io-client";
+import Game from "./pages/Game";
 
 // autoConnect true でOK
 export const socket = io("http://localhost:3000", {
@@ -30,7 +30,7 @@ function App() {
           <Route path="/createroom" element={<CreateRoom />} />
           <Route path="/searchroom" element={<SearchRoom />} />
           <Route path="/Match" element={<Match />} />
-          <Route path="/sendcountry" element={<SendCountry />} />
+          <Route path="/Game" element={<Game />} />
           <Route path="/resultscreen" element={<ResultScreen />} />
         </Routes>
       </BrowserRouter>

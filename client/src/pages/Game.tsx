@@ -8,7 +8,7 @@ interface  country {
 
 const correctCountryName = ["二ホン","カンコク","アメリカ"]
 
-const  SendCountry:React.FC = () => {
+const  Game:React.FC = () => {
 
     const [country,setCountry] = useState("")
     const [countryName,setCountryName] = useState<country[]  >([])
@@ -124,4 +124,4 @@ const  SendCountry:React.FC = () => {
     )
 }
 
-export default SendCountry
+export default Game
