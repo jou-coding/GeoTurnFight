@@ -23,3 +23,11 @@ export async function findMany() {
     })
     
 }
+
+export async function roomIdFunc(name:string) {
+      const room = await prisma.room.findFirst({
+    where: { name },
+    select: { id: true },
+  })
+  return room?.id ?? null
+}
