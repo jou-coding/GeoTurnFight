@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import Card from "../components/Card"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type Props = {
   name: string;
@@ -18,9 +18,11 @@ const Battle = () => {
     const [user1,setUser1] = useState("")
     //userw2
     const [user2,setUser2] = useState("")
-
-    // roomId
-    const roomId = "room-1234"
+        
+    //URLクエリをゲットする
+         const location = useLocation();
+        const params = new URLSearchParams(location.search);
+        const roomName = params.get("roomName"); 
 
     useEffect(()=>{
         fetch("http://localhost:3001/users").then((res)=>res.json()).then((data)=> {
@@ -34,8 +36,14 @@ const Battle = () => {
     const Button = ({ name, buttonName, user01, user02 }: Props) => {
     const navigate = useNavigate();
 
-    const handleClick = () => {
-        navigate(`${name}?roomId=${roomId}`, {
+    const handleClick = async () => {
+
+        
+        
+        const response = await fetch(`http://localhost:3000/api/room/getRoomId?name=${roomName}`)
+
+        const data = await response.json();
+        navigate(`${name}?roomId=${data.id}`, {
         state: {
             user01,
             user02,

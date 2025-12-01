@@ -47,9 +47,8 @@ export async function createRoom(req:Request,res:Response) {
 export async function getRoomId(req:Request,res:Response) {
     try{
             const name = req.query.name as string; 
-        // nameから、部屋idをもらう関数を書く
         const roomid  =  await roomIdFunc(name)
-        res.send(roomid)
+        res.send({id:roomid})
         
     }catch(error){
          console.error("Registration error:", error);

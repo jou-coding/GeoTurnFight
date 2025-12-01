@@ -15,8 +15,6 @@ const SearchRoom = () => {
         body:JSON.stringify({name:room_name})
     }
 )
-   
-
         return res
     }
 
@@ -29,7 +27,7 @@ const SearchRoom = () => {
                     <h2 className="text-2xl font-bold text-center mb-6">入る部屋のID入力</h2>
                     <form className="space-y-4">
                         <input type="text" value={room_name} onChange={changeRoomName} placeholder="部屋のID入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"/>
-                        <Button name="/battle" buttonName="決定" func={SearchRoom} />
+                        <Button name={`/battle?roomName=${room_name}`} buttonName="決定" func={SearchRoom} />
                     </form>
                 </div>
             </div>
