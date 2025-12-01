@@ -76,7 +76,7 @@ const Battle = () => {
   <Button
     name="/SendCountry"
     buttonName="決定"
-    user01={user1}
+    user01={name}
     user02={user2}
   />:(<div id="btn" onClick={() => setCard(true)} className="bg-white rounded-lg  p-3 hover:shadow-lg">準備OK</div>)}
         </div>
