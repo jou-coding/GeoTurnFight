@@ -5,7 +5,7 @@ import Room from "./pages/Room/Room";
 import Match from "./pages/Room/Match";
 import ResultScreen from "./pages/ResultScreen";
 import Game from "./pages/Room/Game";
-import AppProvider from "./components/AppProvider";
+import AppProvider from "./AppProvider";
 
 
 function App() {
