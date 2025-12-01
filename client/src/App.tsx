@@ -9,9 +9,16 @@ import Battle from "./pages/Battle";
 import SendCountry from "./pages/SendCountry";
 import ResultScreen from "./pages/ResultScreen";
 import Provider from "./components/Provider"
+import { io } from "socket.io-client";
+
+// autoConnect true でOK
+export const socket = io("http://localhost:3000", {
+  autoConnect: true,transports:["websocket","polling"]
+});
 
 
 function App() {
+  
   return (
     <Provider >
       <BrowserRouter>

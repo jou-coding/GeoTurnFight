@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { io } from "socket.io-client"
+import { socket } from "../App"
 
 interface  country {
     name:string
@@ -17,33 +17,34 @@ const  SendCountry:React.FC = () => {
     
 
     // socket.ioの連携
-    useEffect(() => {
-        const socket = io("http://localhost:3000",{transports:["websocket","polling"]})
+   useEffect(() => {
 
-        // 接続処理
-        socket.on("connect",()=>{
-            console.log("socket connected")
-            const data = {name:user01}
-            socket.emit("joinRoom",data.name)
-            
-        })
+    const handleConnect = () => {
+        console.log("socket connected")
+        socket.emit("joinRoom", user01)
+    }
 
-        //接続エラー
-        socket.on("connect_error",(error: any)=>{
-            console.error("接続エラー",error)
-        })
+    const handleError = (err: any) => {
+        console.log("接続エラー", err)
+    }
 
-        // 切断
-        socket.on("disconnect",(reason:any)=>{
-            console.log("切断",reason)
-        })
+    const handleDisconnect = (reason: any) => {
+        console.log("切断", reason)
+    }
 
-        // クリーンアップ関数
-        return () => {
-            socket.disconnect()
-            console.log("Socket discconeted")
-        }
-    },[])
+    socket.on("connect", handleConnect)
+    socket.on("connect_error", handleError)
+    socket.on("disconnect", handleDisconnect)
+
+    // クリーンアップ関数（イベントだけ解除）
+    return () => {
+        socket.off("connect", handleConnect)
+        socket.off("connect_error", handleError)
+        socket.off("disconnect", handleDisconnect)
+        console.log("cleanup: socket イベント解除")
+    }
+
+}, [])
 
     // ユーザー情報
       const location = useLocation();
