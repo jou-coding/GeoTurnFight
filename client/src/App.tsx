@@ -25,7 +25,6 @@ function App() {
           <Route path="/loginuser" element={<LoginUser />} />
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
-          <Route path="/createroom" element={<CreateRoom />} />
           <Route path="/Match" element={<Match />} />
           <Route path="/Game" element={<Game />} />
           <Route path="/resultscreen" element={<ResultScreen />} />
