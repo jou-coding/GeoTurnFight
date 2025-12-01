@@ -15,7 +15,7 @@ const CreateRoom = () => {
     }
 
 
-    const [name_value,setNameValue] = useState<string | null>(null)
+    const [name_value,setNameValue] = useState<string>("")
 
     const handleChange = (e:any) => {
         setNameValue(e.target.value)
@@ -43,12 +43,6 @@ const CreateRoom = () => {
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({name:name_value})
         })
-
-        // 問題かも
-        if(typeof(name_value) !== "string"){
-                setNameValue("値が入っていない")
-        }
-
 
         return res
     }
