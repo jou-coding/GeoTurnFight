@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { SearchRoomModal } from "../../components/SearchRoomModal";
+import { SearchRoomModal } from "../../components/modal/SearchRoomModal";
 
 const Room:React.FC = () => {
 
