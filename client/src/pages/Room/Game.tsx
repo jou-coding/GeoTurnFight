@@ -84,8 +84,8 @@ const  Game:React.FC = () => {
     const rireki = () => {
             return(
             <>
-                {countryName.map((value) => {
-                    return  <div className="text-center">{value.name}</div>
+                {countryName.map((value, id) => {
+                    return  <div key={id} className="text-center">{value.name}</div>
             })}
                 
             </>
