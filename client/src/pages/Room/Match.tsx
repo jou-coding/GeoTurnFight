@@ -30,7 +30,6 @@ const Match = () => {
 
     useEffect(()=>{
        if(!roomName) return;
-       console.log(name)
        
        // 1. この部屋に参加する
        socket.emit("joinRoom",{
