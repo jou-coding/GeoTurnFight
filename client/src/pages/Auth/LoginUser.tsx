@@ -37,7 +37,7 @@ const LoginUser:React.FC = () => {
                 <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8">
                     <h2 className="text-2xl font-bold text-center mb-6">ログイン</h2>
                     <form className="space-y-4">
-                        <input type="name" value={name_value} onChange={nameChange} placeholder="メールアドレス" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"  />
+                        <input type="name" value={name_value} onChange={nameChange} placeholder="ユーザー名" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"  />
                         <input type="password" value={password_value} onChange={passwordChange} placeholder="パスワード" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
                         <button type="button" 
                         onClick={() => handleLogin()}
