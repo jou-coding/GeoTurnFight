@@ -15,10 +15,7 @@ const io = new Server(server, {
 io.on("connection",(socket) =>{
     console.log("ClientのsocketIdは",socket.id)
     // ここに、onやemitの処理を書く
-    socket.on("hello",(data) => {
-        console.log(data.name)
-    })
-
+ 
     // 各機能のハンドラーを登録する。
     registerRoomHandler(socket,io)
 
