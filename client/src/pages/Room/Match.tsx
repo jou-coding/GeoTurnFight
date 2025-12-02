@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 
 import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../../components/Card";
+import { socket } from "../../lib/socket";
 
 type Props = {
   name: string;
@@ -15,21 +16,44 @@ type Props = {
 const Match = () => {
 
     const [card,setCard] = useState(false)
-    
-    //userw2
     const [user2,setUser2] = useState("")
-        
-    //URLクエリをゲットする
-         const location = useLocation();
-        const params = new URLSearchParams(location.search);
-        const roomName = params.get("roomName"); 
+ 
+    //URLクエリから、roomNameを取得
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const roomName = params.get("roomName") ?? ""; 
+
+    let name = localStorage.getItem("username")
+    if(typeof(name) !== "string"){
+    name = "名無し"
+    }
 
     useEffect(()=>{
-        fetch("http://localhost:3001/users").then((res)=>res.json()).then((data)=> {
-            setUser2(data[1].name)
-            
-        })
-    },[])
+       if(!roomName) return;
+       console.log(name)
+       
+       // 1. この部屋に参加する
+       socket.emit("joinRoom",{
+        roomName,
+        userName:name
+       })
+
+       // 2. 部屋メンバー一覧が送られてきた処理
+       const handleRoomUsers = (users:string[]) => {
+            // 自分以外のユーザーをuser2にセット
+            const other = users.find((u) => u !== name)
+            if(other){
+                setUser2(other)
+            }
+       }
+
+        socket.on("roomUsers", handleRoomUsers);
+        
+        // 3. クリーンアップ（このページから離れたら抜ける）
+        return() => {
+            socket.off("roomUsers",handleRoomUsers)
+        }
+    },[roomName,name])
 
     // ボタンコンポーネント
     const Button = ({ name, buttonName, user01, user02 }: Props) => {
@@ -60,10 +84,7 @@ const Match = () => {
         );
     };
 
-     let name = localStorage.getItem("username")
-    if(typeof(name) !== "string"){
-    name = "名無し"
-    }
+    
 
     return(
         <div className="min-h-screen bg-gray-50 flex justify-center  items-center flex-col">
