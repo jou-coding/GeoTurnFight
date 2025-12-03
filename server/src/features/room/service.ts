@@ -5,9 +5,15 @@ const roomUsers:Record<string,string[]> = {}
 export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
 
     //クライアントからの参加要求
-     socket.on("joinRoom",({roomName,userName}) =>{
-       try{
+     socket.on("joinRoom",(data) =>{
+       // エラーの回避（後で修正）
+        if(data==null) return
+
+        const {roomName,userName} = data 
+
         if (!roomName || !userName) return;
+
+        
 
         socket.join(roomName)
 
@@ -20,9 +26,7 @@ export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, 
         // その部屋にいる全員へ最新メンバーを配信
         io.to(roomName).emit("roomUsers",roomUsers[roomName])
 
-       }catch(error){
-        console.error("エラーが発生しています",error)
-       }
+       
     })
     
 }

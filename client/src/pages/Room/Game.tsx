@@ -23,7 +23,7 @@ const  Game:React.FC = () => {
 
     const handleConnect = () => {
         console.log("socket connected")
-        socket.emit("joinRoom", user01)
+        
     }
 
     const handleError = (err: any) => {
