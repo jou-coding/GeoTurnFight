@@ -3,17 +3,12 @@ import { useLocation } from "react-router-dom"
 import { useSocket } from "../AppProvider"
 
 
-
-interface  country {
-    name:string
-}
-
-const correctCountryName = ["二ホン","カンコク","アメリカ"]
-
 const  Game:React.FC = () => {
 
     const [country,setCountry] = useState("")
-    const [countryName,setCountryName] = useState<country[]  >([])
+
+    const [countries,setCountries] = useState<string[]>([])
+    
     const [turn,setTurn] = useState(true)
     
     const socket = useSocket()    
@@ -23,7 +18,6 @@ const  Game:React.FC = () => {
 
     const handleConnect = () => {
         console.log("socket connected")
-        
     }
 
     const handleError = (err: any) => {
@@ -34,9 +28,20 @@ const  Game:React.FC = () => {
         console.log("切断", reason)
     }
 
+    const changeTurn = (value:boolean) => {
+        setTurn(value)
+    }
+
+    const rirekifunc = (data:{data:string[]})=>{
+        const countries = data.data
+        setCountries(countries)
+    }
+
     socket.on("connect", handleConnect)
     socket.on("connect_error", handleError)
     socket.on("disconnect", handleDisconnect)
+    socket.on("turn",changeTurn)
+    socket.on("rireki",rirekifunc)
 
     // クリーンアップ関数（イベントだけ解除）
     return () => {
@@ -58,32 +63,17 @@ const  Game:React.FC = () => {
 
     //国名のチェック関数
     const checkCountry = () => {
-        correctCountryName.forEach((value)=>{
-            //　回答データ確認
-            const num = value == country
-
-            // 同じ回答か確認
-            let check_same_answer:boolean
-           check_same_answer =  countryName.some((value) => {
-                 return value.name == country
-            })
-
-            if(num && !check_same_answer ){
-                setCountryName([...countryName,{name:value}])
-                setTurn(!turn)
-                setCountry("")
-            }
-        })        
+        // ソケットを送る
+        socket.emit("checkCountry",{country:country})
     }
 
     
     const rireki = () => {
             return(
             <>
-                {countryName.map((value, id) => {
-                    return  <div key={id} className="text-center">{value.name}</div>
+                {countries.map((value, id) => {
+                    return  <div key={id} className="text-center">{value}</div>
             })}
-                
             </>
             )
             
@@ -103,7 +93,6 @@ const  Game:React.FC = () => {
         <div className="min-h-screen bg-gray-50 flex justify-center item-center flex-col">
             {turnFunction()}
             <div className=" flex items-center justify-center">
-                
                 <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
                     <h2 className="text-2xl font-bold text-center">国名入力</h2>
                     <input type="text"  placeholder="国名を入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
@@ -111,7 +100,6 @@ const  Game:React.FC = () => {
         onChange={(e) => setCountry(e.target.value)}
                     />
                     <button className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700" onClick={checkCountry}>決定</button>
-                    
                     <div className="border">
                         <h2 className="font-bold text-center">履歴</h2>
                         {rireki()}
