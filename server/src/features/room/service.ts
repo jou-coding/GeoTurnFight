@@ -9,6 +9,7 @@ const countries:string[] = []
 // ターン
 let turn:boolean = true
 
+
 // boolean
 const changeTrun = () =>{
     if(turn === true){
@@ -19,6 +20,12 @@ const changeTrun = () =>{
 }
 
 export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
+    
+type PlayerId = "player1"|"player2"
+let currentTurn:PlayerId = "player1"
+
+     // 今の手番を接続してきたクライアントに教える
+    socket.emit("turnUpdate", currentTurn);
 
     //クライアントからの参加要求
      socket.on("joinRoom",(data) =>{
@@ -44,6 +51,14 @@ export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, 
             console.log("送ったデータ:",data)
              // データの取り出し
         let country = data.country
+        let player = data.player
+        // 手番チェック（不正防止）
+        if (player !== currentTurn) {
+        socket.emit("errorMessage", "今はあなたの番じゃないよ");
+        return;
+        }
+
+
          correctCountryName.forEach((value)=>{
             //　回答データ確認
             const num = value == country
@@ -54,11 +69,17 @@ export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, 
             })
             if(num && !check_same_answer ){
                 countries.push(country)
+                  // 手番交代
+                currentTurn = currentTurn === "player1" ? "player2" : "player1";
+                // 全クライアントに現在の手番を通知
+                socket.emit("turnUpdate", currentTurn);
                 changeTrun()
                 socket.emit("turn",turn)
                 socket.emit("rireki",{data:countries})
                 country = ""
                 console.log(countries)
+                
+
             }
         })   
     })

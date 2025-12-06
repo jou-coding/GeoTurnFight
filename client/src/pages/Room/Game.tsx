@@ -1,9 +1,22 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { useSocket } from "../AppProvider"
 
 
+
 const  Game:React.FC = () => {
+    type PlayerId = "player1"|"player2"|undefined
+
+        // ユーザー情報
+    const location = useLocation();
+    const { user01, user02 } = (location.state || {}) as {
+        user01: string;
+        user02: string;
+  };
+  const myName = localStorage.getItem("username")
+  let initialPlayer:PlayerId | null = null;
+  if(myName === user01) initialPlayer = "player1"
+  if(myName === user02) initialPlayer = "player2"
 
     const [country,setCountry] = useState("")
 
@@ -11,6 +24,12 @@ const  Game:React.FC = () => {
     
     // ターン trunの時、user01
     const [turn,setTurn] = useState(true)
+
+    // フロント側で判定する
+    const [myPlayer,setMyPlayer] = useState<PlayerId | null>(initialPlayer)
+
+    // playerの保持
+    // const currentTurnRef = useRef<PlayerId>("player1")
 
     // 敗北管理
     const [haiboku,setHaiboku] = useState(false)
@@ -20,8 +39,14 @@ const  Game:React.FC = () => {
     // 勝敗
 
 
+
+
+
     // socket.ioの連携
    useEffect(() => {
+
+     socket.on("turnUpdate", (turn: PlayerId) => {
+          console.log(turn)   });
 
     const handleConnect = () => {
         console.log("socket connected")
@@ -33,6 +58,11 @@ const  Game:React.FC = () => {
 
     const handleDisconnect = (reason: any) => {
         console.log("切断", reason)
+    }
+
+      const errorMessage = (err: any) => {
+        console.log("エラーメッセージ", err)
+        alert(err)
     }
 
     const changeTurn = (value:boolean) => {
@@ -47,6 +77,7 @@ const  Game:React.FC = () => {
     socket.on("connect", handleConnect)
     socket.on("connect_error", handleError)
     socket.on("disconnect", handleDisconnect)
+    socket.on("errorMessage",errorMessage)
     socket.on("turn",changeTurn)
     socket.on("rireki",rirekifunc)
 
@@ -55,23 +86,22 @@ const  Game:React.FC = () => {
         socket.off("connect", handleConnect)
         socket.off("connect_error", handleError)
         socket.off("disconnect", handleDisconnect)
+        socket.off("turnUpdate");
         console.log("cleanup: socket イベント解除")
     }
 
 }, [])
 
-    // ユーザー情報
-      const location = useLocation();
-    const { user01, user02 } = (location.state || {}) as {
-    user01?: string;
-    user02?: string;
-  };
 
 
+ 
     //国名のチェック関数
     const checkCountry = () => {
         // ソケットを送る
-        socket.emit("checkCountry",{country:country})
+        
+        console.log("kuni",country)
+        console.log("player",myPlayer)
+        socket.emit("checkCountry",{player:myPlayer,country:country})
         setCountry("")
     }
 
@@ -111,7 +141,7 @@ const  Game:React.FC = () => {
                         <div className="border-b text-center  pb-3  ">結果</div>
                         <div className="font-bold text-center text-lg">{user}の勝利</div>
                         <div className="flex flex-row gap-2 justify-center">
-                            <Link to="/room" className="bg-blue-500 p-10 rounded-lg">終了</Link>
+                            <Link to="/room" className="bg-blue-500 p-10 rounded-lg"  >終了</Link>
                             <Link to="/match" className="bg-blue-500 p-10 rounded-lg">もう一度</Link>
                         </div>
                     </div>
