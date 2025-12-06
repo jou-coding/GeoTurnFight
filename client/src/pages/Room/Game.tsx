@@ -65,6 +65,7 @@ const  Game:React.FC = () => {
     const checkCountry = () => {
         // ソケットを送る
         socket.emit("checkCountry",{country:country})
+        setCountry("")
     }
 
     
