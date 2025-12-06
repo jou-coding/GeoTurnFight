@@ -103,7 +103,7 @@ const  Game:React.FC = () => {
                         <div className="font-bold text-center text-lg">敗北</div>
                         <div className="flex flex-row gap-2 justify-center">
                             <Link to="/room" className="bg-blue-500 p-10 rounded-lg">終了</Link>
-                            <button className="bg-blue-500 p-10 rounded-lg" name="/Match">もう一度</button>
+                            <Link to="/Match" className="bg-blue-500 p-10 rounded-lg">もう一度</Link>
                         </div>
                     </div>
                 </div>
