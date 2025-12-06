@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useSocket } from "../AppProvider"
 
 
@@ -102,7 +102,7 @@ const  Game:React.FC = () => {
                         <div className="border-b text-center  pb-3  ">結果</div>
                         <div className="font-bold text-center text-lg">敗北</div>
                         <div className="flex flex-row gap-2 justify-center">
-                            <button className="bg-blue-500 p-10 rounded-lg " name="/Room">終了</button>
+                            <Link to="/room" className="bg-blue-500 p-10 rounded-lg">終了</Link>
                             <button className="bg-blue-500 p-10 rounded-lg" name="/Match">もう一度</button>
                         </div>
                     </div>
