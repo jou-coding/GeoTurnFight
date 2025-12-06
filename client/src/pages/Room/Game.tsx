@@ -10,8 +10,14 @@ const  Game:React.FC = () => {
     const [countries,setCountries] = useState<string[]>([])
     
     const [turn,setTurn] = useState(true)
+
+    // 敗北管理
+    const [haiboku,setHaiboku] = useState(false)
     
-    const socket = useSocket()    
+    const socket = useSocket()
+
+    // 勝敗
+
 
     // socket.ioの連携
    useEffect(() => {
@@ -88,6 +94,24 @@ const  Game:React.FC = () => {
             )
         }
 
+        const haibokuFunction = () => {
+            return(
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                <div className="w-full max-w-md flex justify-center bg-blue-300 p-50 rounded-lg">
+                    <div className="w-full max-w-sm space-y-5 m-3">
+                        <div className="border-b text-center  pb-3  ">結果</div>
+                        <div className="font-bold text-center text-lg">敗北</div>
+                        <div className="flex flex-row gap-2 justify-center">
+                            <button className="bg-blue-500 p-10 rounded-lg " name="/Room">終了</button>
+                            <button className="bg-blue-500 p-10 rounded-lg" name="/Match">もう一度</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )
+
+        }
+
     
 
     return(
@@ -101,12 +125,14 @@ const  Game:React.FC = () => {
         onChange={(e) => setCountry(e.target.value)}
                     />
                     <button className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700" onClick={checkCountry}>決定</button>
+                    <button className="p-3 bg-blue-300 rounded-lg" onClick={() => setHaiboku(true)}>降参</button>
                     <div className="border">
                         <h2 className="font-bold text-center">履歴</h2>
                         {rireki()}
                     </div>
                 </div>
             </div>
+            {haiboku && haibokuFunction()}
         </div>
     )
 }
