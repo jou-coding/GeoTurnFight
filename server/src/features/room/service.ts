@@ -9,7 +9,6 @@ const countries:string[] = []
 // ターン
 let turn:boolean = true
 
-
 // boolean
 const changeTrun = () =>{
     if(turn === true){
@@ -19,9 +18,61 @@ const changeTrun = () =>{
     }
 }
 
+// サーバー側で管理する
+// プレイヤーの型
+type PlayerId =  "player1" | "player2"
+// プレイヤーの情報の型
+type PlayerInfo = {
+    socketId:string
+    userName:string
+}
+// 部屋ごとのプレイヤーの情報をサーバーで管理する
+const rooms:Record<string,{
+    player1?:PlayerInfo,player2?:PlayerInfo
+}> = {}
+
+
 export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
     
-type PlayerId = "player1"|"player2"
+
+// クライアントから[ゲームに参加したい]とき
+    socket.on("joinGame",({roomName,userName}:{roomName:string,userName:string}) => {
+        // 部屋の箱がなければ作る。
+        if(!rooms[roomName]){
+            rooms[roomName] = {}
+        }
+
+        const room = rooms[roomName]
+
+        let assigned:PlayerId | null = null
+
+        // まだ、プレイヤー1がいないなら、あなたがプレイヤー1
+        if(!room.player1){
+            room.player1 = {socketId:socket.id,userName}
+            assigned = "player1"
+        }
+
+        // 次に来た人
+        else if(!rooms.player && room.player1.userName !== userName){
+            room.player2 = {socketId:socket.id,userName}
+            assigned = "player2"
+        }
+        // それ以上は満員
+        else {
+            socket.emit("errorMessage","この部屋は満員です")
+        }
+
+        // 部屋に参加させる
+        socket.join(roomName)
+
+        // 本人にだけ[あなたはplayer1/player2]と教える
+        socket.emit("assignPlayer",assigned)
+        console.log(`room=${roomName} user=${userName}を${assigned} に割りてます。`)
+
+    })
+
+
+
 let currentTurn:PlayerId = "player1"
 
      // 今の手番を接続してきたクライアントに教える
@@ -78,8 +129,6 @@ let currentTurn:PlayerId = "player1"
                 socket.emit("rireki",{data:countries})
                 country = ""
                 console.log(countries)
-                
-
             }
         })   
     })

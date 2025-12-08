@@ -14,7 +14,7 @@ const  Game:React.FC = () => {
         user01: string;
         user02: string;
   };
-  const myName = localStorage.getItem("username")
+  const myName = localStorage.getItem("username")?? "no-name"
   let initialPlayer:PlayerId | null = null;
   if(myName === user01) initialPlayer = "player1"
   if(myName === user02) initialPlayer = "player2"
@@ -36,6 +36,23 @@ const  Game:React.FC = () => {
     
     // socket.ioの連携
    useEffect(() => {
+
+    // 部屋に参加したことをサーバーに伝える
+    // const myname = localStorage.getItem("username") ?? "no-name"
+
+    // 部屋に参加したことをサーバーに伝える
+    socket.emit("joinGame",{
+        roomName:"room1",
+        userName:myName
+    })
+
+        // サーバー[あなたは、プレイヤー1/プレイヤー2です]
+        const handleAssignPlayer = (playerId:PlayerId)=>{
+            setMyPlayer(playerId)
+        }
+
+    // ソケットプレイヤー
+    socket.on("assignPlayer", handleAssignPlayer);
 
      socket.on("turnUpdate", (turn: PlayerId) => {
           console.log(turn)   });
@@ -79,6 +96,7 @@ const  Game:React.FC = () => {
         socket.off("connect_error", handleError)
         socket.off("disconnect", handleDisconnect)
         socket.off("turnUpdate");
+        socket.off("assignPlayer", handleAssignPlayer);
         console.log("cleanup: socket イベント解除")
     }
 
@@ -93,7 +111,7 @@ const  Game:React.FC = () => {
         
         console.log("kuni",country)
         console.log("player",myPlayer)
-        socket.emit("checkCountry",{player:myPlayer,country:country})
+        // socket.emit("checkCountry",{player:myPlayer,country:country})
         setCountry("")
     }
 
