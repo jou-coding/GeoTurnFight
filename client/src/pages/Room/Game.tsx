@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { useSocket } from "../AppProvider"
 
@@ -28,20 +28,11 @@ const  Game:React.FC = () => {
     // フロント側で判定する
     const [myPlayer,setMyPlayer] = useState<PlayerId | null>(initialPlayer)
 
-    // playerの保持
-    // const currentTurnRef = useRef<PlayerId>("player1")
-
     // 敗北管理
     const [haiboku,setHaiboku] = useState(false)
     
     const socket = useSocket()
-
-    // 勝敗
-
-
-
-
-
+    
     // socket.ioの連携
    useEffect(() => {
 
