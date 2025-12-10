@@ -38,9 +38,6 @@ const  Game:React.FC = () => {
    useEffect(() => {
 
     // 部屋に参加したことをサーバーに伝える
-    // const myname = localStorage.getItem("username") ?? "no-name"
-
-    // 部屋に参加したことをサーバーに伝える
     socket.emit("joinGame",{
         roomName:"room1",
         userName:myName
@@ -111,7 +108,7 @@ const  Game:React.FC = () => {
         
         console.log("kuni",country)
         console.log("player",myPlayer)
-        // socket.emit("checkCountry",{player:myPlayer,country:country})
+        socket.emit("checkCountry",{player:myPlayer,country:country})
         setCountry("")
     }
 

@@ -46,20 +46,41 @@ export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, 
 
         let assigned:PlayerId | null = null
 
+
+          // ① すでにこのユーザーが player1 の場合（StrictMode 2回目など）
+        if (room.player1?.userName === userName) {
+            assigned = "player1";
+             console.log("既に player1 として割り当て済み:", userName);
+            }
+    // ② すでにこのユーザーが player2 の場合
+        else if (room.player2?.userName === userName) {
+            assigned = "player2";
+            console.log("既に player2 として割り当て済み:", userName);
+             }
         // まだ、プレイヤー1がいないなら、あなたがプレイヤー1
-        if(!room.player1){
+        else if(!room.player1){
             room.player1 = {socketId:socket.id,userName}
             assigned = "player1"
         }
+        // 開発中のリアクトはレンダリングを２回するので
+        else if(room.player1.userName === userName){
+            console.log("割り当てられていますよ。",userName)
+        }
 
         // 次に来た人
-        else if(!rooms.player && room.player1.userName !== userName){
+        else if(!room.player2){
             room.player2 = {socketId:socket.id,userName}
             assigned = "player2"
+        }
+
+           // 開発中のリアクトはレンダリングを２回するので
+        else if(room.player2.userName === userName){
+            console.log("割り当てられていますよ。",userName)
         }
         // それ以上は満員
         else {
             socket.emit("errorMessage","この部屋は満員です")
+            return;
         }
 
         // 部屋に参加させる
