@@ -9,8 +9,8 @@ const  CountryBattleGame:React.FC = () => {
     type PlayerId = "player1"|"player2"|undefined
 
         // ユーザー情報
-    const location = useLocation();
-    const { user01, user02 } = (location.state || {}) as {
+    const locationState = useLocation();
+    const { user01, user02 } = (locationState.state || {}) as {
         user01: string;
         user02: string;
   };
