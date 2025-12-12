@@ -14,10 +14,10 @@ const  CountryBattleGame:React.FC = () => {
         user01: string;
         user02: string;
   };
-  const myName = localStorage.getItem("username")?? "no-name"
+  const CountryBattleGame = localStorage.getItem("username")?? "no-name"
   let initialPlayer:PlayerId | null = null;
-  if(myName === user01) initialPlayer = "player1"
-  if(myName === user02) initialPlayer = "player2"
+  if(CountryBattleGame === user01) initialPlayer = "player1"
+  if(CountryBattleGame === user02) initialPlayer = "player2"
 
     const [country,setCountry] = useState("")
 
@@ -40,7 +40,7 @@ const  CountryBattleGame:React.FC = () => {
     // 部屋に参加したことをサーバーに伝える
     socket.emit("joinGame",{
         roomName:"room1",
-        userName:myName
+        userName:CountryBattleGame
     })
 
         // サーバー[あなたは、プレイヤー1/プレイヤー2です]
