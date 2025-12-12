@@ -24,11 +24,10 @@ const  CountryBattleGame:React.FC = () => {
 
     const [countries,setCountries] = useState<string[]>([])
     
-    // ターン trunの時、user01
     const [isPlayer1Turn,setIsPlayer1Turn] = useState(true)
 
     // フロント側で判定する
-    const [myPlayer,setMyPlayer] = useState<PlayerId | null>(initialPlayer)
+    const [myPlayerId,setmyPlayerId] = useState<PlayerId | null>(initialPlayer)
 
     // 敗北管理
     const [haiboku,setHaiboku] = useState(false)
@@ -46,7 +45,7 @@ const  CountryBattleGame:React.FC = () => {
 
         // サーバー[あなたは、プレイヤー1/プレイヤー2です]
         const handleAssignPlayer = (playerId:PlayerId)=>{
-            setMyPlayer(playerId)
+            setmyPlayerId(playerId)
         }
 
     // ソケットプレイヤー
@@ -108,8 +107,8 @@ const  CountryBattleGame:React.FC = () => {
         // ソケットを送る
         
         console.log("kuni",inputCountryName)
-        console.log("player",myPlayer)
-        socket.emit("checkCountry",{player:myPlayer,country:inputCountryName})
+        console.log("player",myPlayerId)
+        socket.emit("checkCountry",{player:myPlayerId,country:inputCountryName})
         setInputCountryName("")
     }
 
