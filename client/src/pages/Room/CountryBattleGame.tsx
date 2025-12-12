@@ -10,14 +10,14 @@ const  CountryBattleGame:React.FC = () => {
 
         // ユーザー情報
     const locationState = useLocation();
-    const { user01, user02 } = (locationState.state || {}) as {
+    const { user01:Player1Name, user02:Player2Name } = (locationState.state || {}) as {
         user01: string;
         user02: string;
   };
   const CountryBattleGame = localStorage.getItem("username")?? "no-name"
   let initialPlayer:PlayerId | null = null;
-  if(CountryBattleGame === user01) initialPlayer = "player1"
-  if(CountryBattleGame === user02) initialPlayer = "player2"
+  if(CountryBattleGame === Player1Name) initialPlayer = "player1"
+  if(CountryBattleGame === Player2Name) initialPlayer = "player2"
 
     const [country,setCountry] = useState("")
 
@@ -127,7 +127,7 @@ const  CountryBattleGame:React.FC = () => {
         const turnFunction = () => {
             return(
                 <>
-                {turn?<div  className="text-center">{user01}のターン</div>:<div className="text-center">{user02}のターン</div>}
+                {turn?<div  className="text-center">{Player1Name}のターン</div>:<div className="text-center">{Player2Name}のターン</div>}
                 </>
             )
         }
@@ -152,7 +152,7 @@ const  CountryBattleGame:React.FC = () => {
                     </div>
                 </div>
             </div>
-            {haiboku && <HaibokuButton user01={user01} user02={user02} turn={turn} />}
+            {haiboku && <HaibokuButton user01={Player1Name} user02={Player2Name} turn={turn} />}
         </div>
     )
 }
