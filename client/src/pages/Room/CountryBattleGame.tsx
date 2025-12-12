@@ -19,12 +19,13 @@ const  CountryBattleGame:React.FC = () => {
   if(CountryBattleGame === Player1Name) initialPlayer = "player1"
   if(CountryBattleGame === Player2Name) initialPlayer = "player2"
 
-    const [country,setCountry] = useState("")
+  // 入力中の国名
+    const [inputCountryName,setInputCountryName] = useState("")
 
     const [countries,setCountries] = useState<string[]>([])
     
     // ターン trunの時、user01
-    const [turn,setTurn] = useState(true)
+    const [isPlayer1Turn,setIsPlayer1Turn] = useState(true)
 
     // フロント側で判定する
     const [myPlayer,setMyPlayer] = useState<PlayerId | null>(initialPlayer)
@@ -72,7 +73,7 @@ const  CountryBattleGame:React.FC = () => {
     }
 
     const changeTurn = (value:boolean) => {
-        setTurn(value)
+        setIsPlayer1Turn(value)
     }
 
     const rirekifunc = (data:{data:string[]})=>{
@@ -106,10 +107,10 @@ const  CountryBattleGame:React.FC = () => {
     const checkCountry = () => {
         // ソケットを送る
         
-        console.log("kuni",country)
+        console.log("kuni",inputCountryName)
         console.log("player",myPlayer)
-        socket.emit("checkCountry",{player:myPlayer,country:country})
-        setCountry("")
+        socket.emit("checkCountry",{player:myPlayer,country:inputCountryName})
+        setInputCountryName("")
     }
 
     
@@ -127,7 +128,7 @@ const  CountryBattleGame:React.FC = () => {
         const turnFunction = () => {
             return(
                 <>
-                {turn?<div  className="text-center">{Player1Name}のターン</div>:<div className="text-center">{Player2Name}のターン</div>}
+                {isPlayer1Turn?<div  className="text-center">{Player1Name}のターン</div>:<div className="text-center">{Player2Name}のターン</div>}
                 </>
             )
         }
@@ -141,8 +142,8 @@ const  CountryBattleGame:React.FC = () => {
                 <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
                     <h2 className="text-2xl font-bold text-center">国名入力</h2>
                     <input type="text"  placeholder="国名を入力" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-                     value={country}
-        onChange={(e) => setCountry(e.target.value)}
+                     value={inputCountryName}
+        onChange={(e) => setInputCountryName(e.target.value)}
                     />
                     <button className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700" onClick={checkCountry}>決定</button>
                     <button className="p-3 bg-blue-300 rounded-lg" onClick={() => setHaiboku(true)}>降参</button>
@@ -152,7 +153,7 @@ const  CountryBattleGame:React.FC = () => {
                     </div>
                 </div>
             </div>
-            {haiboku && <HaibokuButton user01={Player1Name} user02={Player2Name} turn={turn} />}
+            {haiboku && <HaibokuButton user01={Player1Name} user02={Player2Name} turn={isPlayer1Turn} />}
         </div>
     )
 }
