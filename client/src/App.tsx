@@ -3,7 +3,7 @@ import ResisterUser from "./pages/Auth/ResisterUser";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import Match from "./pages/Room/Match";
-import Game from "./pages/Room/Game";
+import CountryBattleGame from "./pages/Room/CountryBattleGame";
 import AppProvider from "./pages/AppProvider";
 
 
@@ -17,7 +17,7 @@ function App() {
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
           <Route path="/match" element={<Match />} />
-          <Route path="/Game" element={<Game />} />
+          <Route path="/CountryBattleGame" element={<CountryBattleGame />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

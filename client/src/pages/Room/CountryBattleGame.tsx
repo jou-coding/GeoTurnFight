@@ -5,7 +5,7 @@ import HaibokuButton from "../../components/button/HaibokuButton"
 
 
 
-const  Game:React.FC = () => {
+const  CountryBattleGame:React.FC = () => {
     type PlayerId = "player1"|"player2"|undefined
 
         // ユーザー情報
@@ -157,4 +157,4 @@ const  Game:React.FC = () => {
     )
 }
 
-export default Game
+export default CountryBattleGame
