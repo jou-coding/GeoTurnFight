@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { useSocket } from "../AppProvider";
 import HaibokuButton from "../../components/button/HaibokuButton";
 import TurnInfo from "../../components/game/TurnInfo";
+import CountryHistoryList from "../../components/game/CountryHistoryList";
+import CountryInputForm from "../../components/game/CountryInputForm";
 
 type PlayerId = "player1" | "player2" | undefined;
 
@@ -122,47 +124,20 @@ const CountryBattleGame: React.FC = () => {
     setInputCountryName("");
   };
 
-  // 履歴表示部分
-  const renderCountryHistory = () => {
-    return (
-      <>
-        {countryHistory.map((countryName, index) => (
-          <div key={index} className="text-center">
-            {countryName}
-          </div>
-        ))}
-      </>
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
       <TurnInfo player1Name={player1Name} player2Name={player2Name} isPlayer1Turn={false} />
       <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
-          <h2 className="text-2xl font-bold text-center">国名入力</h2>
-          <input
-            type="text"
-            placeholder="国名を入力"
-            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-            value={inputCountryName}
-            onChange={(e) => setInputCountryName(e.target.value)}
+            <CountryInputForm
+            inputCountryName={inputCountryName}
+            onChangeCountryName={setInputCountryName}
+            onSubmitCountry={handleSubmitCountry}
+            onOpenSurrenderModal={()=>setIsSurrenderModalOpen(true)}
           />
-          <button
-            className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700 text-white"
-            onClick={handleSubmitCountry}
-          >
-            決定
-          </button>
-          <button
-            className="p-3 bg-blue-300 rounded-lg"
-            onClick={() => setIsSurrenderModalOpen(true)}
-          >
-            降参
-          </button>
           <div className="border">
             <h2 className="font-bold text-center">履歴</h2>
-            {renderCountryHistory()}
+            <CountryHistoryList countryHistory={countryHistory} />
           </div>
         </div>
       </div>
