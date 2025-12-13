@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSocket } from "../AppProvider";
 import HaibokuButton from "../../components/button/HaibokuButton";
+import TurnInfo from "../../components/game/TurnInfo";
 
 type PlayerId = "player1" | "player2" | undefined;
 
@@ -134,22 +135,9 @@ const CountryBattleGame: React.FC = () => {
     );
   };
 
-  // ターン表示部分
-  const renderTurnInfo = () => {
-    return (
-      <>
-        {isPlayer1Turn ? (
-          <div className="text-center">{player1Name} のターン</div>
-        ) : (
-          <div className="text-center">{player2Name} のターン</div>
-        )}
-      </>
-    );
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
-      {renderTurnInfo()}
+      <TurnInfo player1Name={player1Name} player2Name={player2Name} isPlayer1Turn={false} />
       <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
           <h2 className="text-2xl font-bold text-center">国名入力</h2>
