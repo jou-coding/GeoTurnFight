@@ -1,4 +1,6 @@
 import type { DefaultEventsMap, Server, Socket } from "socket.io";
+import type { PlayerId, PlayerInfo } from "./game/types.js";
+
 
 // 部屋ごとのユーザー名一覧
 const roomUserNames: Record<string, string[]> = {};
@@ -17,14 +19,7 @@ const toggleIsPlayer1TurnFlag = () => {
   isPlayer1TurnFlag = !isPlayer1TurnFlag;
 };
 
-// プレイヤーID
-type PlayerId = "player1" | "player2";
 
-// プレイヤー情報
-type PlayerInfo = {
-  socketId: string;
-  userName: string;
-};
 
 // 部屋ごとのプレイヤー情報（サーバー管理）
 const roomsByName: Record<
