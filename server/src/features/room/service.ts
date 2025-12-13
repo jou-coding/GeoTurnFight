@@ -1,157 +1,163 @@
 import type { DefaultEventsMap, Server, Socket } from "socket.io";
 
-const roomUsers:Record<string,string[]> = {}
+// 部屋ごとのユーザー名一覧
+const roomUserNames: Record<string, string[]> = {};
 
 // 国名の正解データ
-const correctCountryName = ["二ホン","カンコク","アメリカ"]
-// 言われた国名リスト
-const countries:string[] = []
-// ターン
-let turn:boolean = true
+const validCountryNames = ["二ホン", "カンコク", "アメリカ"];
 
-// boolean
-const changeTrun = () =>{
-    if(turn === true){
-        turn = false
-    }else if(turn === false){
-        turn = true
-    }
-}
+// これまでに言われた国名のリスト
+const submittedCountryNames: string[] = [];
 
-// サーバー側で管理する
-// プレイヤーの型
-type PlayerId =  "player1" | "player2"
-// プレイヤーの情報の型
+// true のとき player1 のターン
+let isPlayer1TurnFlag: boolean = true;
+
+// boolean のターンを反転させる
+const toggleIsPlayer1TurnFlag = () => {
+  isPlayer1TurnFlag = !isPlayer1TurnFlag;
+};
+
+// プレイヤーID
+type PlayerId = "player1" | "player2";
+
+// プレイヤー情報
 type PlayerInfo = {
-    socketId:string
-    userName:string
-}
-// 部屋ごとのプレイヤーの情報をサーバーで管理する
-const rooms:Record<string,{
-    player1?:PlayerInfo,player2?:PlayerInfo
-}> = {}
+  socketId: string;
+  userName: string;
+};
 
+// 部屋ごとのプレイヤー情報（サーバー管理）
+const roomsByName: Record<
+  string,
+  {
+    player1?: PlayerInfo;
+    player2?: PlayerInfo;
+  }
+> = {};
 
-export  function registerRoomHandler(socket:Socket,io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
-    
+export function registerRoomHandler(
+  socket: Socket,
+  io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
+) {
+  // クライアントから[ゲームに参加したい]とき
+  socket.on(
+    "joinGame",
+    ({ roomName, userName }: { roomName: string; userName: string }) => {
+      // 部屋の箱がなければ作る
+      if (!roomsByName[roomName]) {
+        roomsByName[roomName] = {};
+      }
 
-// クライアントから[ゲームに参加したい]とき
-    socket.on("joinGame",({roomName,userName}:{roomName:string,userName:string}) => {
-        // 部屋の箱がなければ作る。
-        if(!rooms[roomName]){
-            rooms[roomName] = {}
-        }
+      const roomInfo = roomsByName[roomName];
 
-        const room = rooms[roomName]
+      let assignedPlayerId: PlayerId | null = null;
 
-        let assigned:PlayerId | null = null
-
-
-          // ① すでにこのユーザーが player1 の場合（StrictMode 2回目など）
-        if (room.player1?.userName === userName) {
-            assigned = "player1";
-             console.log("既に player1 として割り当て済み:", userName);
-            }
-    // ② すでにこのユーザーが player2 の場合
-        else if (room.player2?.userName === userName) {
-            assigned = "player2";
-            console.log("既に player2 として割り当て済み:", userName);
-             }
-        // まだ、プレイヤー1がいないなら、あなたがプレイヤー1
-        else if(!room.player1){
-            room.player1 = {socketId:socket.id,userName}
-            assigned = "player1"
-        }
-        // 開発中のリアクトはレンダリングを２回するので
-        else if(room.player1.userName === userName){
-            console.log("割り当てられていますよ。",userName)
-        }
-
-        // 次に来た人
-        else if(!room.player2){
-            room.player2 = {socketId:socket.id,userName}
-            assigned = "player2"
-        }
-
-           // 開発中のリアクトはレンダリングを２回するので
-        else if(room.player2.userName === userName){
-            console.log("割り当てられていますよ。",userName)
-        }
-        // それ以上は満員
-        else {
-            socket.emit("errorMessage","この部屋は満員です")
-            return;
-        }
-
-        // 部屋に参加させる
-        socket.join(roomName)
-
-        // 本人にだけ[あなたはplayer1/player2]と教える
-        socket.emit("assignPlayer",assigned)
-        console.log(`room=${roomName} user=${userName}を${assigned} に割りてます。`)
-
-    })
-
-
-
-let currentTurn:PlayerId = "player1"
-
-     // 今の手番を接続してきたクライアントに教える
-    socket.emit("turnUpdate", currentTurn);
-
-    //クライアントからの参加要求
-     socket.on("joinRoom",(data) =>{
-       // エラーの回避（後で修正）
-        if(data==null) return
-
-        const {roomName,userName} = data 
-
-        if (!roomName || !userName) return;
-        socket.join(roomName)
-        //　ユーザー一覧を更新
-        const users = roomUsers[roomName] ?? []
-        if(!users.includes(userName)){
-            roomUsers[roomName] = [...users,userName]
-        }
-
-        // その部屋にいる全員へ最新メンバーを配信
-        io.to(roomName).emit("roomUsers",roomUsers[roomName])
-    })
-
-    // 国名のチェック関数
-    socket.on("checkCountry",(data) => {
-            console.log("送ったデータ:",data)
-             // データの取り出し
-        let country = data.country
-        let player = data.player
-        // 手番チェック（不正防止）
-        if (player !== currentTurn) {
-        socket.emit("errorMessage", "今はあなたの番じゃないよ");
+      // ① すでにこのユーザーが player1 の場合（StrictMode 2回目など）
+      if (roomInfo.player1?.userName === userName) {
+        assignedPlayerId = "player1";
+        console.log("既に player1 として割り当て済み:", userName);
+      }
+      // ② すでにこのユーザーが player2 の場合
+      else if (roomInfo.player2?.userName === userName) {
+        assignedPlayerId = "player2";
+        console.log("既に player2 として割り当て済み:", userName);
+      }
+      // まだ player1 がいないなら、あなたが player1
+      else if (!roomInfo.player1) {
+        roomInfo.player1 = { socketId: socket.id, userName };
+        assignedPlayerId = "player1";
+      }
+      // 次に来た人は player2
+      else if (!roomInfo.player2) {
+        roomInfo.player2 = { socketId: socket.id, userName };
+        assignedPlayerId = "player2";
+      }
+      // それ以上は満員
+      else {
+        socket.emit("errorMessage", "この部屋は満員です");
         return;
-        }
+      }
 
+      // 部屋に参加させる
+      socket.join(roomName);
 
-         correctCountryName.forEach((value)=>{
-            //　回答データ確認
-            const num = value == country
-            // 同じ回答か確認
-            let check_same_answer:boolean
-           check_same_answer =  countries.some((value) => {
-                 return value== country
-            })
-            if(num && !check_same_answer ){
-                countries.push(country)
-                  // 手番交代
-                currentTurn = currentTurn === "player1" ? "player2" : "player1";
-                // 全クライアントに現在の手番を通知
-                socket.emit("turnUpdate", currentTurn);
-                changeTrun()
-                socket.emit("turn",turn)
-                socket.emit("rireki",{data:countries})
-                country = ""
-                console.log(countries)
-            }
-        })   
-    })
-    
+      // 本人にだけ[あなたは player1 / player2] と教える
+      socket.emit("assignPlayer", assignedPlayerId);
+      console.log(
+        `room=${roomName} user=${userName} を ${assignedPlayerId} に割り当てます。`
+      );
+    }
+  );
+
+  // 現在の手番 (PlayerId)
+  let currentTurnPlayerId: PlayerId = "player1";
+
+  // 今の手番を接続してきたクライアントに教える
+  socket.emit("turnUpdate", currentTurnPlayerId);
+
+  // クライアントからの参加要求（ルーム一覧用）
+  socket.on("joinRoom", (payload) => {
+    // エラー回避（後で型をしっかり定義してもOK）
+    if (payload == null) return;
+
+    const { roomName, userName } = payload;
+
+    if (!roomName || !userName) return;
+
+    socket.join(roomName);
+
+    // ユーザー一覧を更新
+    const existingUserNames = roomUserNames[roomName] ?? [];
+    if (!existingUserNames.includes(userName)) {
+      roomUserNames[roomName] = [...existingUserNames, userName];
+    }
+
+    // その部屋にいる全員へ最新メンバーを配信
+    io.to(roomName).emit("roomUsers", roomUserNames[roomName]);
+  });
+
+  // 国名のチェック関数
+  socket.on("checkCountry", (payload) => {
+    console.log("送ったデータ:", payload);
+
+    // データの取り出し
+    const submittedCountry = payload.country as string;
+    const submittedPlayerId = payload.player as PlayerId;
+
+    // 手番チェック（不正防止）
+    if (submittedPlayerId !== currentTurnPlayerId) {
+      socket.emit("errorMessage", "今はあなたの番じゃないよ");
+      return;
+    }
+
+    validCountryNames.forEach((validCountryName) => {
+      // 正解データか確認
+      const isCorrect = validCountryName === submittedCountry;
+
+      // すでに同じ回答があるか確認
+      const isAlreadyUsed = submittedCountryNames.some(
+        (existingCountryName) => existingCountryName === submittedCountry
+      );
+
+      if (isCorrect && !isAlreadyUsed) {
+        // 新しい正解を追加
+        submittedCountryNames.push(submittedCountry);
+
+        // 手番交代
+        currentTurnPlayerId = currentTurnPlayerId === "player1" ? "player2" : "player1";
+
+        // 全クライアントに現在の手番(PlayerId)を通知
+        io.emit("turnUpdate", currentTurnPlayerId);
+
+        // boolean フラグのほうも更新
+        toggleIsPlayer1TurnFlag();
+        io.emit("turn", isPlayer1TurnFlag);
+
+        // 履歴を配信
+        io.emit("historyUpdate", { countryNames: submittedCountryNames });
+
+        console.log(submittedCountryNames);
+      }
+    });
+  });
 }
