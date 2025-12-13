@@ -33,7 +33,7 @@ const CountryBattleGame: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
-      <TurnInfo player1Name={player1Name} player2Name={player2Name} isPlayer1Turn={false} />
+      <TurnInfo player1Name={player1Name} player2Name={player2Name} isPlayer1Turn={isPlayer1Turn} />
       <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
             <CountryInputForm
