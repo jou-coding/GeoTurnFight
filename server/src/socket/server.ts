@@ -1,6 +1,7 @@
 import * as http from "http";
 import { Server } from "socket.io"
-import { registerRoomHandler } from "../features/room/service.js";
+import { registerRoomHandler } from "../features/room/game/roomHandler.js";
+import { registerGameHandler } from "../features/room/game/gameHandler.js";
 
 export function initSocketServer(server:http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>){
 
@@ -17,7 +18,8 @@ io.on("connection",(socket) =>{
     // ここに、onやemitの処理を書く
  
     // 各機能のハンドラーを登録する。
-    registerRoomHandler(socket,io)
+    registerRoomHandler(socket, io);
+    registerGameHandler(socket, io);
 
     socket.on("disconnect",() => {
         console.log("disconnectIdは、",socket.id)
