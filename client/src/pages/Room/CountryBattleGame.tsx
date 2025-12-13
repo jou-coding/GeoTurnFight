@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSocket } from "../AppProvider";
 import HaibokuButton from "../../components/button/HaibokuButton";
 import TurnInfo from "../../components/game/TurnInfo";
 import CountryHistoryList from "../../components/game/CountryHistoryList";
 import CountryInputForm from "../../components/game/CountryInputForm";
-
-type PlayerId = "player1" | "player2" | undefined;
+import { useCountryBattleGame } from "../../hooks/useCountryBattleGame";
 
 const CountryBattleGame: React.FC = () => {
   // ルーティングから受け取るプレイヤー名
@@ -19,110 +16,20 @@ const CountryBattleGame: React.FC = () => {
   // 自分のユーザー名
   const currentUserName = localStorage.getItem("username") ?? "no-name";
 
-  // 自分がどちらのプレイヤーか（player1 / player2）
-  let initialPlayerId: PlayerId | null = null;
-  if (currentUserName === player1Name) initialPlayerId = "player1";
-  if (currentUserName === player2Name) initialPlayerId = "player2";
-
-  // 入力中の国名
-  const [inputCountryName, setInputCountryName] = useState("");
-
-  // これまでに正解した国名の履歴
-  const [countryHistory, setCountryHistory] = useState<string[]>([]);
-
-  // true のとき player1 のターン（＝ player1Name のターン）
-  const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
-
-  // 自分がどちらのプレイヤーか（フロント管理）
-  const [myPlayerId, setMyPlayerId] = useState<PlayerId | null>(initialPlayerId);
-
-  // 敗北（降参）モーダル表示管理
-  const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
-
-  const socket = useSocket();
-
-  // socket.io の連携
-  useEffect(() => {
-    // 部屋に参加したことをサーバーに伝える
-    socket.emit("joinGame", {
-      roomName: "room1",
-      userName: currentUserName,
-    });
-
-    // サーバー「あなたは player1 / player2 です」
-    const handleAssignPlayer = (playerId: PlayerId) => {
-      setMyPlayerId(playerId);
-    };
-
-    // 今の手番（player1 / player2）
-    const handleTurnPlayerIdUpdate = (turnPlayerId: PlayerId) => {
-      console.log("current turn playerId:", turnPlayerId);
-      // 必要なら、ここで PlayerId ベースのStateにしてもOK
-    };
-
-    const handleSocketConnect = () => {
-      console.log("socket connected");
-    };
-
-    const handleSocketConnectError = (err: unknown) => {
-      console.log("接続エラー", err);
-    };
-
-    const handleSocketDisconnect = (reason: unknown) => {
-      console.log("切断", reason);
-    };
-
-    const handleErrorMessage = (err: unknown) => {
-      console.log("エラーメッセージ", err);
-      alert(err);
-    };
-
-    // サーバーから送られてくる boolean ターン
-    const handleTurnFlagUpdate = (nextIsPlayer1Turn: boolean) => {
-      setIsPlayer1Turn(nextIsPlayer1Turn);
-    };
-
-    // 履歴更新イベント
-    const handleCountryHistoryUpdate = (payload: { countryNames: string[] }) => {
-      const updatedCountryHistory = payload.countryNames;
-      setCountryHistory(updatedCountryHistory);
-    };
-
-    socket.on("connect", handleSocketConnect);
-    socket.on("connect_error", handleSocketConnectError);
-    socket.on("disconnect", handleSocketDisconnect);
-    socket.on("errorMessage", handleErrorMessage);
-    socket.on("assignPlayer", handleAssignPlayer);
-    socket.on("turnUpdate", handleTurnPlayerIdUpdate);
-    socket.on("turn", handleTurnFlagUpdate);
-    socket.on("historyUpdate", handleCountryHistoryUpdate);
-
-    // クリーンアップ関数（イベントだけ解除）
-    return () => {
-      socket.off("connect", handleSocketConnect);
-      socket.off("connect_error", handleSocketConnectError);
-      socket.off("disconnect", handleSocketDisconnect);
-      socket.off("errorMessage", handleErrorMessage);
-      socket.off("assignPlayer", handleAssignPlayer);
-      socket.off("turnUpdate", handleTurnPlayerIdUpdate);
-      socket.off("turn", handleTurnFlagUpdate);
-      socket.off("historyUpdate", handleCountryHistoryUpdate);
-      console.log("cleanup: socket イベント解除");
-    };
-  }, [socket, currentUserName, player1Name, player2Name]);
-
-  // 国名をサーバーに送信してチェックしてもらう
-  const handleSubmitCountry = () => {
-    console.log("inputCountryName:", inputCountryName);
-    console.log("myPlayerId:", myPlayerId);
-
-    socket.emit("checkCountry", {
-      player: myPlayerId,
-      country: inputCountryName,
-    });
-
-    setInputCountryName("");
-  };
+    const {
+    inputCountryName,
+    countryHistory,
+    isPlayer1Turn,
+    isSurrenderModalOpen,
+    setInputCountryName,
+    handleSubmitCountry,
+    openSurrenderModal,
+    // closeSurrenderModal, // 必要なら HaibokuButton 側で使う
+  } = useCountryBattleGame({
+    player1Name,
+    player2Name,
+    currentUserName,
+  });  
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
@@ -133,7 +40,7 @@ const CountryBattleGame: React.FC = () => {
             inputCountryName={inputCountryName}
             onChangeCountryName={setInputCountryName}
             onSubmitCountry={handleSubmitCountry}
-            onOpenSurrenderModal={()=>setIsSurrenderModalOpen(true)}
+            onOpenSurrenderModal={()=>openSurrenderModal()}
           />
           <div className="border">
             <h2 className="font-bold text-center">履歴</h2>
