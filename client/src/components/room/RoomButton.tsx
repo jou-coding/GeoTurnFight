@@ -13,8 +13,6 @@ type Props = {
     const navigate = useNavigate();
 
     const handleClick = async () => {
-
-        
         
         const response = await fetch(`http://localhost:3000/api/room/getRoomId?name=${roomName}`)
 
