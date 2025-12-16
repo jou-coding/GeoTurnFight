@@ -31,21 +31,17 @@ export function useMatch(): UseMatchReturn {
   useEffect(() => {
     if (!roomName) return;
 
-
+     const onMatchUpdate = (data: any) => {
+      setUser1(data.player1);
+      setUser2(data.player2);
+     };
 
     socket.emit("joinGame", { roomName, userName: name });
 
-    socket.on("matchUpdate",(data)=>{
-
-      setUser1(data.player1)
-      setUser2(data.player2)
-    })
+    socket.on("matchUpdate",onMatchUpdate)
 
     return () => {
-        socket.off("matchUpdate",(data)=>{
-          setUser1(data.player1)
-          setUser2(data.player2)
-        })
+        socket.off("matchUpdate",onMatchUpdate)
     };
   }, [roomName,name ]);
 
