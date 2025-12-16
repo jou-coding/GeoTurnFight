@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { socket } from "../lib/socket"; // ←プロジェクトに合わせてパス調整
-import type { PlayerId } from "./useCountryBattleGame";
+import { socket } from "../lib/socket";
 
 type UseMatchReturn = {
   roomName: string;
