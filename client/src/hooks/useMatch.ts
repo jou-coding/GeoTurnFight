@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../lib/socket"; // ←プロジェクトに合わせてパス調整
+import type { PlayerId } from "./useCountryBattleGame";
 
 type UseMatchReturn = {
   roomName: string;
-  name: string;
+  user1: string;
   user2: string;
   card: boolean;
   setCard: (v: boolean) => void;
@@ -25,27 +26,29 @@ export function useMatch(): UseMatchReturn {
   }, []);
 
   const [card, setCard] = useState(false);
+  const [user1,setUser1] = useState("")
   const [user2, setUser2] = useState("");
 
   useEffect(() => {
     if (!roomName) return;
 
-    // ① 受信イベント（相手ユーザー名を更新）
-    const handleRoomUsers = (users: string[]) => {
-      console.log("roomUsers received:", users);
-      const other = users.find((u) => u !== name) ?? "";
-      setUser2(other);
-    };
 
-    socket.on("roomUsers", handleRoomUsers);
 
-    // ② 部屋参加（※ここは今のあなたのまま joinRoom）
-    socket.emit("joinRoom", { roomName, userName: name });
+    socket.emit("joinGame", { roomName, userName: name });
+
+    socket.on("matchUpdate",(data)=>{
+
+      setUser1(data.player1)
+      setUser2(data.player2)
+    })
 
     return () => {
-      socket.off("roomUsers", handleRoomUsers);
+        socket.off("matchUpdate",(data)=>{
+          setUser1(data.player1)
+          setUser2(data.player2)
+        })
     };
-  }, [roomName, name]);
+  }, [roomName,name ]);
 
-  return { roomName, name, user2, card, setCard };
+  return { roomName, user1, user2, card, setCard };
 }

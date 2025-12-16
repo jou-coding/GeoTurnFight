@@ -24,9 +24,17 @@ export function registerRoomHandler(
     }
 
     socket.join(roomName);
+    const p1 = room.players.player1?.userName ?? null;
+    const p2 = room.players.player2?.userName ?? null;
 
     // 本人に通知
     socket.emit("assignPlayer", assignedPlayerId);
+
+    // その部屋にいる全員に配信（片方だけ居る時も配る）
+    io.to(roomName).emit("matchUpdate", {
+      player1: p1,
+      player2: p2,
+    });
 
     // 部屋全体に「現在の手番」を通知（join時に同期）
     io.to(roomName).emit("turnUpdate", room.game.turnPlayerId);
