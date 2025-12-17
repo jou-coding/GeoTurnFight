@@ -27,15 +27,9 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   const [inputCountryName, setInputCountryName] = useState("");
   const [countryHistory, setCountryHistory] = useState<string[]>([]);
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
-  const [PlayerId, setMyPlayerId] = useState<PlayerId | null>(null);
   const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
 
   useEffect(() => {
-
-    // サーバー「あなたは player1 / player2 です」
-    const handleAssignPlayer = (playerId: PlayerId) => {
-      setMyPlayerId(playerId);
-    };
 
     // 今の手番（player1 / player2）
     const handleTurnPlayerIdUpdate = (turnPlayerId: PlayerId) => {
@@ -74,7 +68,6 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     socket.on("connect_error", handleSocketConnectError);
     socket.on("disconnect", handleSocketDisconnect);
     socket.on("errorMessage", handleErrorMessage);
-    socket.on("assignPlayer", handleAssignPlayer);
     socket.on("turnUpdate", handleTurnPlayerIdUpdate);
     socket.on("turn", handleTurnFlagUpdate);
     socket.on("historyUpdate", handleCountryHistoryUpdate);
@@ -84,7 +77,6 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
       socket.off("connect_error", handleSocketConnectError);
       socket.off("disconnect", handleSocketDisconnect);
       socket.off("errorMessage", handleErrorMessage);
-      socket.off("assignPlayer", handleAssignPlayer);
       socket.off("turnUpdate", handleTurnPlayerIdUpdate);
       socket.off("turn", handleTurnFlagUpdate);
       socket.off("historyUpdate", handleCountryHistoryUpdate);

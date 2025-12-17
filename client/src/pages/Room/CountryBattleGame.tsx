@@ -37,6 +37,7 @@ const CountryBattleGamePage: React.FC = () => {
     // closeSurrenderModal, // 必要なら HaibokuButton 側で使う
   } = useCountryBattleGameData
 
+
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
       <TurnInfo
