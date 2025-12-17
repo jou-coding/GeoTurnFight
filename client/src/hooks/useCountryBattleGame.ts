@@ -10,11 +10,13 @@ type UseCountryBattleGameParams = {
   currentUserName: string;
 };
 
-export function useCountryBattleGame({
+export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryBattleGameParams) {
+  
+  const {
   player1Name,
   player2Name,
   currentUserName,
-}: UseCountryBattleGameParams) {
+} = useCountryBattleGameParamsData
   const socket = useSocket();
 
   const [inputCountryName, setInputCountryName] = useState("");
