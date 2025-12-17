@@ -37,9 +37,19 @@ const CountryBattleGamePage: React.FC = () => {
     // closeSurrenderModal, // 必要なら HaibokuButton 側で使う
   } = useCountryBattleGameData
 
+  let myName = ""
+
+  if(playerId==="player1"){
+    myName = player1Name
+  }else if(playerId === "player2"){
+    myName = player2Name
+  }else{
+    myName = "no-name"
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
+      <div>ユーザー名:{myName}</div>
       <TurnInfo
         player1Name={player1Name}
         player2Name={player2Name}
