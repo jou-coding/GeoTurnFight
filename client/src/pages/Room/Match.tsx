@@ -3,8 +3,15 @@ import RoomButton from "../../components/room/RoomButton";
 import { useMatch } from "../../hooks/useMatch"; 
 
 const Match = () => {
-  const { roomName, user1, user2, card, setCard } = useMatch();
 
+  const useMatchData = useMatch();
+
+  const roomName = useMatchData.roomName
+  const user1 = useMatchData.user1
+  const user2 = useMatchData.user2
+  const card = useMatchData.card
+  const setCard = useMatchData.setCard
+  
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
       <div className="w-full max-w-md space-y-4">
