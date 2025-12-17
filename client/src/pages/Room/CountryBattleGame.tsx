@@ -16,7 +16,13 @@ const CountryBattleGamePage: React.FC = () => {
 
   const currentUserName = localStorage.getItem("username") ?? "no-name";
 
-  const {
+  const useCountryBattleGameData = useCountryBattleGame({
+    player1Name,
+    player2Name,
+    currentUserName,
+  });
+
+    const {
     inputCountryName,
     countryHistory,
     isPlayer1Turn,
@@ -25,11 +31,7 @@ const CountryBattleGamePage: React.FC = () => {
     handleSubmitCountry,
     openSurrenderModal,
     // closeSurrenderModal, // 必要なら HaibokuButton 側で使う
-  } = useCountryBattleGame({
-    player1Name,
-    player2Name,
-    currentUserName,
-  });
+  } = useCountryBattleGameData
 
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
