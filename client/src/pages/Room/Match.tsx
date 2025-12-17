@@ -10,7 +10,9 @@ const Match = () => {
   const user1 = useMatchData.user1
   const user2 = useMatchData.user2
   const card = useMatchData.card
+  const playerId = useMatchData.playerId
   const setCard = useMatchData.setCard
+  
   
   return (
     <div className="min-h-screen bg-gray-50 flex justify-center items-center flex-col">
@@ -25,6 +27,7 @@ const Match = () => {
           buttonName="決定"
           user01={user1}
           user02={user2}
+          playerId={playerId}
           roomName={roomName}
         />
       ) : (

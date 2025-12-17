@@ -7,30 +7,30 @@ export type PlayerId = "player1" | "player2" | undefined;
 type UseCountryBattleGameParams = {
   player1Name: string;
   player2Name: string;
+  playerId:PlayerId
+  roomName:string
   currentUserName: string;
 };
 
 export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryBattleGameParams) {
-  
+
   const {
   player1Name,
   player2Name,
+  playerId,
+  roomName,
   currentUserName,
 } = useCountryBattleGameParamsData
   const socket = useSocket();
+  const myPlayerId = playerId
 
   const [inputCountryName, setInputCountryName] = useState("");
   const [countryHistory, setCountryHistory] = useState<string[]>([]);
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
-  const [myPlayerId, setMyPlayerId] = useState<PlayerId | null>(null);
+  const [PlayerId, setMyPlayerId] = useState<PlayerId | null>(null);
   const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
 
   useEffect(() => {
-    // 部屋に参加したことをサーバーに伝える
-    socket.emit("joinGame", {
-      roomName: "room1",
-      userName: currentUserName,
-    });
 
     // サーバー「あなたは player1 / player2 です」
     const handleAssignPlayer = (playerId: PlayerId) => {
@@ -96,8 +96,10 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   const handleSubmitCountry = () => {
     console.log("inputCountryName:", inputCountryName);
     console.log("myPlayerId:", myPlayerId);
+    
 
     socket.emit("checkCountry", {
+      roomName:roomName,
       player: myPlayerId,
       country: inputCountryName,
     });

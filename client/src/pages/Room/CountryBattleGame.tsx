@@ -2,16 +2,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import HaibokuButton from "../../components/button/HaibokuButton";
-import { useCountryBattleGame } from "../../hooks/useCountryBattleGame";
+import { useCountryBattleGame, type PlayerId } from "../../hooks/useCountryBattleGame";
 import TurnInfo from "../../components/game/TurnInfo";
 import CountryHistoryList from "../../components/game/CountryHistoryList";
 import CountryInputForm from "../../components/game/CountryInputForm";
 
 const CountryBattleGamePage: React.FC = () => {
   const locationState = useLocation();
-  const { user01: player1Name, user02: player2Name } = (locationState.state || {}) as {
+  const { user01: player1Name, user02: player2Name,playerId:playerId,roomName:roomName } = (locationState.state || {}) as {
     user01: string;
     user02: string;
+    playerId:PlayerId
+    roomName:string
   };
 
   const currentUserName = localStorage.getItem("username") ?? "no-name";
@@ -19,6 +21,8 @@ const CountryBattleGamePage: React.FC = () => {
   const useCountryBattleGameData = useCountryBattleGame({
     player1Name,
     player2Name,
+    playerId,
+    roomName,
     currentUserName,
   });
 

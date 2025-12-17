@@ -9,6 +9,13 @@ export function registerGameHandler(
   socket.on("checkCountry", ({ roomName, player, country }: { roomName: string; player: PlayerId; country: string }) => {
     const room = getOrCreateRoom(roomName);
 
+    if(!roomName || !player || !country){
+      console.error("Error",console.error("❌ Missing required values", {
+          roomName,
+          player,
+          country,
+       }))
+    }
     // 手番チェック
     if (player !== room.game.turnPlayerId) {
       socket.emit("errorMessage", "今はあなたの番じゃないよ");

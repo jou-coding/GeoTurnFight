@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import type { PlayerId } from "../../hooks/useCountryBattleGame";
 
 type Props = {
   name: string;
   buttonName: string;
   user01?: string;
   user02?: string;
+  playerId?:PlayerId;
   roomName:string
 };
 
 // ボタンコンポーネント
-    const  RoomButton = ({ name, buttonName, user01, user02,roomName }: Props) => {
+    const  RoomButton = ({ name, buttonName, user01, user02,playerId,roomName }: Props) => {
     const navigate = useNavigate();
 
     const handleClick = async () => {
@@ -21,6 +23,8 @@ type Props = {
         state: {
             user01,
             user02,
+            playerId,
+            roomName
         },
         });
     };

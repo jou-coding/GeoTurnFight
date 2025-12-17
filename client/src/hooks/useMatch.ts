@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { socket } from "../lib/socket";
+import type { PlayerId } from "./useCountryBattleGame";
 
 type UseMatchReturn = {
   roomName: string;
   user1: string;
   user2: string;
   card: boolean;
+  playerId?:PlayerId;
   setCard: (v: boolean) => void;
 };
 
@@ -27,6 +29,7 @@ export function useMatch(): UseMatchReturn {
   const [card, setCard] = useState(false);
   const [user1,setUser1] = useState("")
   const [user2, setUser2] = useState("");
+  const [playerId,setPlayerId] = useState<PlayerId>(undefined)
 
   useEffect(() => {
     if (!roomName) return;
@@ -35,17 +38,22 @@ export function useMatch(): UseMatchReturn {
       setUser1(data.player1);
       setUser2(data.player2);
      };
+     
+     const onAssignPlayer = (assignPlayerData:PlayerId) => {
+        setPlayerId(assignPlayerData)
+     }
 
     socket.emit("joinGame", { roomName, userName: name });
-
+    socket.on("assignPlayer",onAssignPlayer)
     socket.on("matchUpdate",onMatchUpdate)
 
     return () => {
         socket.off("matchUpdate",onMatchUpdate)
+        socket.off("assignPlayer",onAssignPlayer)
     };
   }, [roomName,name ]);
 
-  const useMatchData:UseMatchReturn = { roomName, user1, user2, card, setCard }
+  const useMatchData:UseMatchReturn = { roomName, user1, user2, card,playerId, setCard }
   
   return useMatchData
 }
