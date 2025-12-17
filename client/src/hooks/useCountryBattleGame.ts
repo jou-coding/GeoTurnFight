@@ -106,18 +106,22 @@ export function useCountryBattleGame({
   const openSurrenderModal = () => setIsSurrenderModalOpen(true);
   const closeSurrenderModal = () => setIsSurrenderModalOpen(false);
 
-  return {
-    // 状態
-    inputCountryName,
-    countryHistory,
-    isPlayer1Turn,
-    isSurrenderModalOpen,
-    player1Name,
-    player2Name,
-    // setter / handler
-    setInputCountryName,
-    handleSubmitCountry,
-    openSurrenderModal,
-    closeSurrenderModal,
-  };
+ const matchGameData = {
+  // 状態
+  inputCountryName,
+  countryHistory,
+  isPlayer1Turn,
+  isSurrenderModalOpen,
+  player1Name,
+  player2Name,
+
+  // setter / handler
+  setInputCountryName,
+  handleSubmitCountry,
+  openSurrenderModal,
+  closeSurrenderModal,
+};
+
+return matchGameData;
+
 }
