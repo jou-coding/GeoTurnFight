@@ -45,5 +45,7 @@ export function useMatch(): UseMatchReturn {
     };
   }, [roomName,name ]);
 
-  return { roomName, user1, user2, card, setCard };
+  const useMatchData:UseMatchReturn = { roomName, user1, user2, card, setCard }
+  
+  return useMatchData
 }
