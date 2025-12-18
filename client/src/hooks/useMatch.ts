@@ -9,6 +9,7 @@ type UseMatchReturn = {
   user2: string;
   card: boolean;
   playerId?:PlayerId;
+  currentPlayerId?:PlayerId
   setCard: (v: boolean) => void;
 };
 
@@ -30,6 +31,7 @@ export function useMatch(): UseMatchReturn {
   const [user1,setUser1] = useState("")
   const [user2, setUser2] = useState("");
   const [playerId,setPlayerId] = useState<PlayerId>(undefined)
+  const [currentPlayerId,setCurrentPlayerId] = useState<PlayerId>(undefined)
 
   useEffect(() => {
     if (!roomName) return;
@@ -43,17 +45,23 @@ export function useMatch(): UseMatchReturn {
         setPlayerId(assignPlayerData)
      }
 
+     const onturnUpdate = (updateCurrentPlayerId:PlayerId) =>  {
+      setCurrentPlayerId(updateCurrentPlayerId)
+     }
+
     socket.emit("joinGame", { roomName, userName: name });
     socket.on("assignPlayer",onAssignPlayer)
     socket.on("matchUpdate",onMatchUpdate)
+    socket.on("turnUpdate",onturnUpdate)
 
     return () => {
         socket.off("matchUpdate",onMatchUpdate)
         socket.off("assignPlayer",onAssignPlayer)
+        socket.off("turnUpdate",onturnUpdate)
     };
   }, [roomName,name ]);
 
-  const useMatchData:UseMatchReturn = { roomName, user1, user2, card,playerId, setCard }
+  const useMatchData:UseMatchReturn = { roomName, user1, user2, card,playerId,currentPlayerId, setCard }
   
   return useMatchData
 }

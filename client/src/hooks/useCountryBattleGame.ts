@@ -28,6 +28,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   const [countryHistory, setCountryHistory] = useState<string[]>([]);
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
   const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
+  const [currentPlayerId,setCurrentPlayerId] = useState<PlayerId>(undefined)
 
   useEffect(() => {
 
@@ -35,6 +36,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     const handleTurnPlayerIdUpdate = (turnPlayerId: PlayerId) => {
       console.log("current turn playerId:", turnPlayerId);
       // 必要ならここで PlayerId ベースの状態も持てる
+      setCurrentPlayerId(turnPlayerId)
     };
 
     const handleSocketConnect = () => {
@@ -110,6 +112,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   isSurrenderModalOpen,
   player1Name,
   player2Name,
+  currentPlayerId,
 
   // setter / handler
   setInputCountryName,

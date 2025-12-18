@@ -6,6 +6,9 @@ export function registerGameHandler(
   socket: Socket,
   io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
 ) {
+
+  
+
   socket.on("checkCountry", ({ roomName, player, country }: { roomName: string; player: PlayerId; country: string }) => {
     const room = getOrCreateRoom(roomName);
 

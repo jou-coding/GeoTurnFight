@@ -9,11 +9,12 @@ import CountryInputForm from "../../components/game/CountryInputForm";
 
 const CountryBattleGamePage: React.FC = () => {
   const locationState = useLocation();
-  const { user01: player1Name, user02: player2Name,playerId:playerId,roomName:roomName } = (locationState.state || {}) as {
+  const { user01: player1Name, user02: player2Name,playerId:playerId,roomName:roomName,currentPlayerId:initialCurrentPlayerId } = (locationState.state || {}) as {
     user01: string;
     user02: string;
     playerId:PlayerId
     roomName:string
+    currentPlayerId:PlayerId
   };
 
   const currentUserName = localStorage.getItem("username") ?? "no-name";
@@ -31,6 +32,7 @@ const CountryBattleGamePage: React.FC = () => {
     countryHistory,
     isPlayer1Turn,
     isSurrenderModalOpen,
+    currentPlayerId,
     setInputCountryName,
     handleSubmitCountry,
     openSurrenderModal,
@@ -54,6 +56,8 @@ const CountryBattleGamePage: React.FC = () => {
         player1Name={player1Name}
         player2Name={player2Name}
         isPlayer1Turn={isPlayer1Turn}
+        initialCurrentPlayerId={initialCurrentPlayerId}
+        currentPlayerId={currentPlayerId}
       />
       <div className="flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-6 sm:p-8 space-y-4">
