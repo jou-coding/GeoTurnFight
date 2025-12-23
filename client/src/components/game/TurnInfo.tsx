@@ -4,7 +4,6 @@ import type { PlayerId } from "../../hooks/useCountryBattleGame";
 type TurnInfoProps = {
   player1Name: string;
   player2Name: string;
-  isPlayer1Turn?: boolean;
   currentPlayerId?:PlayerId
   initialCurrentPlayerId?:PlayerId
 };

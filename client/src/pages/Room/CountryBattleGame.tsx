@@ -30,7 +30,6 @@ const CountryBattleGamePage: React.FC = () => {
     const {
     inputCountryName,
     countryHistory,
-    isPlayer1Turn,
     isSurrenderModalOpen,
     currentPlayerId,
     setInputCountryName,
@@ -55,7 +54,6 @@ const CountryBattleGamePage: React.FC = () => {
       <TurnInfo
         player1Name={player1Name}
         player2Name={player2Name}
-        isPlayer1Turn={isPlayer1Turn}
         initialCurrentPlayerId={initialCurrentPlayerId}
         currentPlayerId={currentPlayerId}
       />
