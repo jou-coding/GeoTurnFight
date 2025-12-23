@@ -11,6 +11,7 @@ const Match = () => {
   const user2 = useMatchData.user2
   const card = useMatchData.card
   const playerId = useMatchData.playerId
+  const checktoGame  = useMatchData.checktoGame
   const currentPlayerId = useMatchData.currentPlayerId
   const setCard = useMatchData.setCard
   
@@ -28,6 +29,7 @@ const Match = () => {
           user01={user1}
           user02={user2}
           playerId={playerId}
+          checkToGame={checktoGame}
           roomName={roomName}
           currentPlayerId={currentPlayerId}
         />

@@ -10,6 +10,7 @@ type UseMatchReturn = {
   card: boolean;
   playerId?:PlayerId;
   currentPlayerId?:PlayerId
+  checktoGame?:string
   setCard: (v: boolean) => void;
 };
 
@@ -32,6 +33,7 @@ export function useMatch(): UseMatchReturn {
   const [user2, setUser2] = useState("");
   const [playerId,setPlayerId] = useState<PlayerId>(undefined)
   const [currentPlayerId,setCurrentPlayerId] = useState<PlayerId>(undefined)
+  const [checktoGame,setChecktoGame]= useState<string>("")
 
   useEffect(() => {
     if (!roomName) return;
@@ -49,19 +51,26 @@ export function useMatch(): UseMatchReturn {
       setCurrentPlayerId(updateCurrentPlayerId)
      }
 
+     const ontoGameButton = (checkplayer2:{player2:string}) => {
+      let checkPlayerUsername = checkplayer2.player2
+      setChecktoGame(checkPlayerUsername)
+     }
+
     socket.emit("joinGame", { roomName, userName: name });
     socket.on("assignPlayer",onAssignPlayer)
     socket.on("matchUpdate",onMatchUpdate)
     socket.on("turnUpdate",onturnUpdate)
+    socket.on("toGameButton",ontoGameButton)
 
     return () => {
         socket.off("matchUpdate",onMatchUpdate)
         socket.off("assignPlayer",onAssignPlayer)
         socket.off("turnUpdate",onturnUpdate)
+        socket.off("toGameButton",ontoGameButton)
     };
   }, [roomName,name ]);
 
-  const useMatchData:UseMatchReturn = { roomName, user1, user2, card,playerId,currentPlayerId, setCard }
+  const useMatchData:UseMatchReturn = { roomName, user1, user2, card,playerId,currentPlayerId,checktoGame,setCard }
   
   return useMatchData
 }

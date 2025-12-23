@@ -27,6 +27,10 @@ export function registerRoomHandler(
     const p1 = room.players.player1?.userName ?? null;
     const p2 = room.players.player2?.userName ?? null;
 
+    //Gameページ遷移のための確認
+    io.to(roomName).emit("toGameButton",{
+      player2:room.players.player2?.userName ?? null
+    })
     // 本人に通知
     socket.emit("assignPlayer", assignedPlayerId);
 
