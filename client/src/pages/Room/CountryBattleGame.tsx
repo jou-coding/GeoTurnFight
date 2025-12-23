@@ -77,7 +77,8 @@ const CountryBattleGamePage: React.FC = () => {
         <HaibokuButton
           user01={player1Name}
           user02={player2Name}
-          turn={isPlayer1Turn}
+          initialCurrentPlayerId={initialCurrentPlayerId}
+          currentPlayerId={currentPlayerId}
         />
       )}
     </div>
