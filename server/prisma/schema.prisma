@@ -33,3 +33,14 @@ model Room{
   maxPlayer Int @default(4)
   status String @default("waiting")
 }
+
+model Country {
+  id      Int     @id @default(autoincrement())
+  code    String  @unique    // ISO 3166-1 alpha-2 (JP, US, ...)
+  nameJa  String
+  nameEn  String
+  isOecd  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

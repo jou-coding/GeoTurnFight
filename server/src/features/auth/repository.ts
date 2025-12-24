@@ -16,5 +16,5 @@ export async function findUser(name:string) {
     return  await prisma.user.findUnique({where:{
     name:name
   }})
-    
 }
+
