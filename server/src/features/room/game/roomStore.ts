@@ -1,8 +1,12 @@
 import type { PlayerId, RoomState } from "./types.js";
 
-
 const VALID_COUNTRY_NAMES = ["二ホン", "カンコク", "アメリカ"] as const;
-export const validCountryNames = [...VALID_COUNTRY_NAMES];
+const validCountrySet = new Set(VALID_COUNTRY_NAMES);
+
+export function isValidCountryName(country: string) {
+  return validCountrySet.has(country as any);
+}
+
 
 const roomsByName: Record<string, RoomState> = {};
 
@@ -40,8 +44,10 @@ export function addUserName(room: RoomState, userName: string) {
   if (!room.userNames.includes(userName)) room.userNames.push(userName);
 }
 
+
+
 export function canAcceptCountry(room: RoomState, country: string) {
-  const isValid = validCountryNames.includes(country as any);
+  const isValid = isValidCountryName(country);
   const isUnused = !room.game.submittedCountryNames.includes(country);
   return { isValid, isUnused };
 }
