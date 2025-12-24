@@ -1,10 +1,15 @@
 import type { PlayerId, RoomState } from "./types.js";
+import { PrismaClient } from "../../../../generated/prisma/client.js";
 
-const VALID_COUNTRY_NAMES = ["二ホン", "カンコク", "アメリカ"] as const;
-const validCountrySet = new Set(VALID_COUNTRY_NAMES);
+const prisma = new PrismaClient();
+let validCountrySet: Set<string> | null = null;
 
-export function isValidCountryName(country: string) {
-  return validCountrySet.has(country as any);
+initCountryCache()
+
+export async function initCountryCache() {
+  validCountrySet = new Set(
+    (await prisma.country.findMany()).map(c => c.nameJa)
+  );
 }
 
 
@@ -45,12 +50,20 @@ export function addUserName(room: RoomState, userName: string) {
 }
 
 
+export function isValidCountryName(country: string): boolean {
+  if (!validCountrySet) {
+    throw new Error("Country cache not initialized");
+  }
+  return validCountrySet.has(country);
+}
+
 
 export function canAcceptCountry(room: RoomState, country: string) {
   const isValid = isValidCountryName(country);
   const isUnused = !room.game.submittedCountryNames.includes(country);
   return { isValid, isUnused };
 }
+
 
 export function pushCountryAndSwitchTurn(room: RoomState, country: string) {
   room.game.submittedCountryNames.push(country);
