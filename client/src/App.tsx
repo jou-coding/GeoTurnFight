@@ -17,7 +17,7 @@ function App() {
           <Route path="/resisteruser" element={<ResisterUser />} />
           <Route path="/room" element={<Room />} />
           <Route path="/match" element={<Match />} />
-          <Route path="/CountryBattleGame" element={<CountryBattleGame />} />
+          <Route path="/CountryBattleGame" element={<CountryBattleGame />}/>
         </Routes>
       </BrowserRouter>
     </AppProvider>

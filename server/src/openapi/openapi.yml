@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Room API
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000/api/room
+
+paths:
+  /getRoomId:
+    get:
+      summary: ルームIDを取得する
+      description: クエリ `name` を受け取り、対応するルームIDを返す。
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ルーム名
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoomIdResponse'
+              examples:
+                sample:
+                  value:
+                    id: "r_123"
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "サーバーエラーが発生しました"
+
+components:
+  schemas:
+    GetRoomIdResponse:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: string
+          description: ルームID
+
+    Error500:
+      type: object
+      required: [status, error]
+      properties:
+        status:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: "サーバーエラーが発生しました"
