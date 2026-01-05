@@ -34,10 +34,6 @@ export async function login(req:Request,res:Response) {
      const {username,password} = req.body
      // userネーム送られている
      console.log("ユーザーネーム",username)
-     // パスワード送られれている
-     console.log("パスワード",password)
-
-
       const user =  await validateUser(username,password)
       console.log("userについて教えて",user)
     
