@@ -65,7 +65,7 @@
 
 ## セットアップ
 ```bash
-npm install
+npm run install
 ```
 
 ## 開発サーバー起動
