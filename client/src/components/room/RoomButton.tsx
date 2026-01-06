@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import type { PlayerId } from "../../hooks/useCountryBattleGame";
-import { getAuthHeaders } from "../../lib/auth";
 
 type Props = {
   name: string;
@@ -26,11 +25,7 @@ type Props = {
             alert("対戦相手がルームに入っていません!!")
             return
         }
-        const response = await fetch(`http://localhost:3000/api/room/getRoomId?name=${roomName}`,{
-        headers:{
-            ...getAuthHeaders()
-        }
-        })
+        const response = await fetch(`http://localhost:3000/api/room/getRoomId?name=${roomName}`)
 
         const data = await response.json();
         navigate(`${name}?roomId=${data.id}`, {
