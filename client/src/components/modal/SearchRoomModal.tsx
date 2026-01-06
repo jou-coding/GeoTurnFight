@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Button from "../Button"
+import { getAuthHeaders } from "../../lib/auth"
 
 type Props = {
     onClose:() =>  void
@@ -15,7 +16,10 @@ export const SearchRoomModal:React.FC<Props> = ({onClose}) => {
     const SearchRoom = async () => {
         const res = await fetch("http://localhost:3000/api/room/findRoom",{
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers:{
+            "Content-Type":"application/json",
+            ...getAuthHeaders()
+        },
         body:JSON.stringify({name:roomName})
     }
 )

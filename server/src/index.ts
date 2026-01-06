@@ -7,6 +7,7 @@ import path from "path";
 import YAML from "yaml";
 import cors from "cors"
 import { authRouter } from "./features/auth/routes.js";
+import { requireAuth } from "./features/auth/middleware.js";
 import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./socket/server.js";
 
@@ -32,7 +33,7 @@ app.use(Express.json())
 
 // ルーターをマウントする
 app.use("/api/auth",authRouter)
-app.use("/api/room",roomRouter)
+app.use("/api/room",requireAuth,roomRouter)
 
 export const io = initSocketServer(server)
 
