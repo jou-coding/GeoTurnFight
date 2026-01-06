@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { findUser, saveUser } from "./repository.js";
+import { signAuthToken } from "./token.js";
 
 export async function createUser(username: string, password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -12,4 +13,8 @@ export async function validateUser(username: string, password: string) {
   
   const isValid = await bcrypt.compare(password, user.password);
   return isValid ? user : null;
+}
+
+export function issueAuthToken(user: { id: number; name: string }) {
+  return signAuthToken({ userId: user.id, username: user.name });
 }

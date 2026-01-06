@@ -1,5 +1,5 @@
 import type {Request,Response} from "express"
-import {createUser,validateUser} from "./service.js"
+import {createUser,issueAuthToken,validateUser} from "./service.js"
 
 export async function register(req:Request,res:Response) {
     try{
@@ -40,7 +40,9 @@ export async function login(req:Request,res:Response) {
       if(!user){
         return res.status(401).json({error:"認証が失敗しました。"})
       } 
-     res.send({status:true})
+
+      const token = issueAuthToken(user)
+     res.send({status:true, token, user: { id: user.id, name: user.name }})
       }catch(error){
         console.error("コンソールエラー",error)
       } 

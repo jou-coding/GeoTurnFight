@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { setAuthToken } from "../../lib/auth"
+import { updateSocketAuth } from "../../lib/socket"
 
 const LoginUser:React.FC = () => {
     const navigate = useNavigate()
@@ -24,7 +26,10 @@ const LoginUser:React.FC = () => {
 
         
         if(res.ok === true){
+            const data = await res.json()
             localStorage.setItem("username",name_value)
+            setAuthToken(data.token)
+            updateSocketAuth(data.token)
             navigate("/room")
         }else{
             alert("ログイン失敗")
