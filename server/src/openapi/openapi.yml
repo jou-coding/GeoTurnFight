@@ -125,6 +125,68 @@ paths:
                     status: false
                     error: "サーバーエラーが発生しました"
 
+  /findRoom:
+    post:
+      summary: ルームを検索する
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ""
+              required:
+                - name
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetRoomIdResponse"
+              examples:
+                sample:
+                  value:
+                    room: "roomA"
+        "400":
+          description: 値が入っていない
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "不正なリクエストです"
+        "404":
+          description: ルームが存在しない
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "ルームが存在しない"
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "サーバーエラーが発生しました"
+
+
+
 
 
 components:
