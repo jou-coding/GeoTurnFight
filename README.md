@@ -76,13 +76,26 @@ npm run dev
 - フロントエンド: Vite のデフォルトポート（例: http://localhost:5173）
 - バックエンド: `http://localhost:3000`（API/Socket）
 
-## 環境変数
-バックエンドで `DATABASE_URL` が必要です。
+## 環境変数の設定（必須）
 
-例:
+バックエンドの起動には、PostgreSQL の接続情報を表す  
+`DATABASE_URL` の設定が必要です。
+
+### 手順
+
+1. `.env.example` をコピーして `.env` を作成します
+```bash
+cp .env.example .env
 ```
-DATABASE_URL="postgresql://user:password@localhost:5432/geoturnfight"
+2. .env 内の DATABASE_URL を、自分の PostgreSQL 接続URLに書き換えてください
+（Supabase / Render / ローカルPostgreSQL など）
 ```
+DATABASE_URL="postgresql://user:password@host:5432/database"
+```
+*補足*
+- DATABASE_URL は APIキーではありません
+- PostgreSQL への 接続文字列（Connection URL） です
+- .env は Gitにコミットしない でください
 
 Prisma Client は `postinstall` で生成されます。
 ```
