@@ -1,0 +1,34 @@
+/getRoomId:
+    get:
+      summary: ルームIDを取得する
+      description: クエリ `name` を受け取り、対応するルームIDを返す。
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ルーム名
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi.yml#/components/schemas/GetRoomIdResponse'
+              examples:
+                sample:
+                  value:
+                    id: "r_123"
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi.yml#/components/schemas/Error500'
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "サーバーエラーが発生しました"
+
