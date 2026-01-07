@@ -40,6 +40,66 @@ paths:
                     status: false
                     error: "サーバーエラーが発生しました"
 
+  /createRoom:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: ""
+              required:
+                - name
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetRoomIdResponse"
+              examples:
+                sample:
+                  value:
+                    status: true
+        "400":
+          description: bodyに値が入っていない
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "不正なリクエストです"
+        409:
+          description: ルーム名の重複禁止です。
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "不正なリクエストです"
+
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "サーバーエラーが発生しました"
+
+
 components:
   schemas:
     GetRoomIdResponse:
@@ -49,7 +109,6 @@ components:
         id:
           type: string
           description: ルームID
-
     Error500:
       type: object
       required: [status, error]
@@ -60,3 +119,13 @@ components:
         error:
           type: string
           example: "サーバーエラーが発生しました"
+    Error400:
+      type: object
+      required: [status, error]
+      properties:
+        status:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: "不正なリクエストです"
