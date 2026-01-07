@@ -99,6 +99,33 @@ paths:
                     status: false
                     error: "サーバーエラーが発生しました"
 
+  /allRooms:
+    get:
+      summary: すべての部屋を取得する
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRoomIdResponse'
+              examples:
+                sample:
+                  value:
+                    id: "r_123"
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+              examples:
+                sample:
+                  value:
+                    status: false
+                    error: "サーバーエラーが発生しました"
+
+
 
 components:
   schemas:
