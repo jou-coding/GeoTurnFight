@@ -184,6 +184,32 @@ paths:
                   value:
                     status: false
                     error: "サーバーエラーが発生しました"
+  /register:
+    post:
+      summary: 新規登録
+      tags: ["Auth"]
+      description: ユーザーを新規登録します。
+      requestBody:
+        description: 新規登録の内容
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                username: {type: string,example: ユーザーネーム}
+                password: {type: string,password: パスワード}
+      responses:
+        "201":
+          description: "新規登録成功"
+        "400":
+          description: 入力不足
+        "409":
+          description: 既に存在するユーザー
+        "500":
+          description: サーバー内部エラー
+
+            
 
 
 
