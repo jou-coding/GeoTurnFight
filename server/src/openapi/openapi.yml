@@ -202,7 +202,7 @@ paths:
               type: object
               properties: 
                 username: {type: string,example: ユーザーネーム}
-                password: {type: string,password: パスワード}
+                password: {type: string,example: パスワード}
       responses:
         "201":
           description: "新規登録成功"
