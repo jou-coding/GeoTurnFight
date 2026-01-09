@@ -125,25 +125,18 @@ npm -v
 ## API（REST）
 ベースURL: `http://localhost:3000`
 
+主要なエンドポイントを簡易リストで記載します。  
+詳細なリクエスト/レスポンスは、`server/src/openapi/openapi.yml` を参照してください。
+
 ### 認証
 - `POST /api/auth/register`
-  - body: `{ "username": "name", "password": "pass" }`
-  - response: `{ "status": true }`
 - `POST /api/auth/login`
-  - body: `{ "username": "name", "password": "pass" }`
-  - response: `{ "status": true }`
 
 ### ルーム
 - `POST /api/room/createRoom`
-  - body: `{ "name": "roomA" }`
-  - response: `{ "status": true }`
 - `GET /api/room/allRooms`
-  - response: `{ "allroom": [...] }`
 - `POST /api/room/findRoom`
-  - body: `{ "name": "roomA" }`
-  - response: `{ "room": "roomA" }`
 - `GET /api/room/getRoomId?name=roomA`
-  - response: `{ "id": 123 }`
 
 ## Socket.IO イベント
 **クライアント → サーバ**
