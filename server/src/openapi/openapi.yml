@@ -257,8 +257,28 @@ paths:
         "500":
           description: サーバー内部エラー
 
-
-
+  /logout:
+    post:
+      summary: ログアウト（リフレッシュトークン無効化）
+      tags: ["Auth"]
+      description: リフレッシュトークンを無効化しログアウトします。
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                  refreshToken: {type: string,example: rt_9f3a2c8b1e6d34abcde}
+      responses:
+          "200":
+            description: "成功レスポンス"
+          "401":
+            description: トークン無効
+          "500":
+            description: サーバー内部エラー
+  
+  
 
 
 components:
