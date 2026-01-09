@@ -277,8 +277,20 @@ paths:
             description: トークン無効
           "500":
             description: サーバー内部エラー
-  
-  
+
+  /me:
+    get:
+      summary: 自分の情報取得（JWT必須）
+      tags: ["Auth"]
+      description: アクセストークンで認証し、ユーザー情報を返します。
+      responses:
+        "200":
+          description: 成功レスポンス
+        "401":
+            description: トークン無効/期限切れ
+        "500":
+          description: サーバー内部エラー
+
 
 
 components:
