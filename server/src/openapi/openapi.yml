@@ -9,6 +9,7 @@ paths:
   /getRoomId:
     get:
       summary: ルームIDを取得する
+      tags: ["Room"]
       description: クエリ `name` を受け取り、対応するルームIDを返す。
       parameters:
         - name: name
@@ -42,6 +43,7 @@ paths:
 
   /createRoom:
     post:
+      tags: ["Room"]
       requestBody:
         required: true
         content:
@@ -102,6 +104,7 @@ paths:
   /allRooms:
     get:
       summary: すべての部屋を取得する
+      tags: ["Room"]
       responses:
         '200':
           description: OK
@@ -128,6 +131,7 @@ paths:
   /findRoom:
     post:
       summary: ルームを検索する
+      tags: ["Room"]
       requestBody:
         required: true
         content:
