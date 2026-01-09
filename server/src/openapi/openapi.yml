@@ -212,6 +212,30 @@ paths:
           description: 既に存在するユーザー
         "500":
           description: サーバー内部エラー
+  /login:
+    post:
+      summary: ログイン
+      tags: ["Auth"]
+      description: ユーザー認証に成功した場合、JWTを発行する。
+      requestBody:
+        description: ログインするための情報
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: {type: string,example: ユーザーネーム}
+                password: {type: string,example: パスワード}
+      responses:
+        200:
+          description: ok
+        "400":
+          description: 入力不足
+        "401":
+          description: 認証失敗
+        "500":
+          description: サーバー内部エラー
 
             
 
