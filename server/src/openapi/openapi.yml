@@ -236,8 +236,26 @@ paths:
           description: 認証失敗
         "500":
           description: サーバー内部エラー
-
-            
+  /refresh:
+    post:
+      summary: トークン更新（アクセストークン再発行）
+      tags: ["Auth"]
+      description: リフレッシュトークンを使ってアクセストークンを再発行します。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken: {type: string,example: rt_9f3a2c8b1e6d34abcde}
+      responses:
+        "200":
+          description: "成功レスポンス"
+        "401":
+          description: リフレッシュトークン無効/期限切れ
+        "500":
+          description: サーバー内部エラー
 
 
 
