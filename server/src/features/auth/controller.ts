@@ -1,5 +1,6 @@
 import type {Request,Response} from "express"
 import {createUser,validateUser} from "./service.js"
+import jwt from "jsonwebtoken"
 
 export async function register(req:Request,res:Response) {
     try{
@@ -13,6 +14,7 @@ export async function register(req:Request,res:Response) {
           });
         }
 
+       
 
     
     await createUser(username,password)
@@ -36,11 +38,17 @@ export async function login(req:Request,res:Response) {
      console.log("ユーザーネーム",username)
       const user =  await validateUser(username,password)
       console.log("userについて教えて",user)
-    
       if(!user){
         return res.status(401).json({error:"認証が失敗しました。"})
       } 
-     res.send({status:true})
+
+       const token = jwt.sign(
+          { username: username },
+          process.env.JWT_SECRET!,
+          { expiresIn: "1h" }
+        );
+
+     res.send({status:true, accessToken: token })
       }catch(error){
         console.error("コンソールエラー",error)
       } 
