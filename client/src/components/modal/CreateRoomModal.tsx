@@ -13,6 +13,8 @@ export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
         const socket = useSocket()
     
         const [nameValue,setNameValue] = useState<string>("")
+        // token
+        const token = localStorage.getItem("accessToken")
     
         const handleChange = (e:any) => {
             setNameValue(e.target.value)
@@ -35,9 +37,12 @@ export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
     
             const res = await fetch("http://localhost:3000/api/room/createRoom",{
                 method:"POST",
-                headers:{"Content-Type":"application/json"},
+                headers:{"Content-Type":"application/json",
+                     "Authorization": `Bearer ${token}`
+                },
                 body:JSON.stringify({name:nameValue})
             })
+            
     
             return res
         }
