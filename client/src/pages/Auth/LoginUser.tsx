@@ -25,6 +25,9 @@ const LoginUser:React.FC = () => {
         
         if(res.ok === true){
             localStorage.setItem("username",name_value)
+            const result = await res.json()
+            const {accessToken} = result
+            localStorage.setItem("acessToken",accessToken)
             navigate("/room")
         }else{
             alert("ログイン失敗")
