@@ -13,8 +13,12 @@ const app = Express();
 const server = http.createServer(app)
 // 静的ファイル（HTML/CSS/JSなど)を配信
 app.use(Express.static("public"))
-// すべてのオリジンを許可（開発用）
-app.use(cors());
+
+app.use(cors({
+  origin: ["http://localhost:5173"],
+  credentials: true
+}));
+
 
 //Jsonリクエストをパースする
 app.use(Express.json())
