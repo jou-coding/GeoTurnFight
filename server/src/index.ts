@@ -5,7 +5,6 @@ import cors from "cors"
 import { authRouter } from "./features/auth/routes.js";
 import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./socket/server.js";
-import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 dotenv.config()
 // Expressアプリの作成
@@ -22,7 +21,7 @@ app.use(Express.json())
 
 // ルーターをマウントする
 app.use("/api/auth",authRouter)
-app.use("/api/room",authMiddleware,roomRouter)
+app.use("/api/room",roomRouter)
 
 export const io = initSocketServer(server)
 
