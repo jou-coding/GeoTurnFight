@@ -14,6 +14,13 @@ import { authMiddleware } from "./middlewares/authMiddleware.js";
 dotenv.config()
 // Expressアプリの作成
 const app = Express();
+// openapi.yml の読み込み
+const openapiPath = path.join(process.cwd(), "src/openapi/openapi.yml");
+const file = fs.readFileSync(openapiPath, "utf8");
+const openapiDoc = YAML.parse(file);
+// Swagger UI
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiDoc));
+
 // HTTPサーバーを作成し、Expressを使う
 const server = http.createServer(app)
 // 静的ファイル（HTML/CSS/JSなど)を配信
