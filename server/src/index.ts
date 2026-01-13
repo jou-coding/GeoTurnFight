@@ -15,7 +15,7 @@ const server = http.createServer(app)
 app.use(Express.static("public"))
 
 app.use(cors({
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173","https://geoturnfight.onrender.com"],
   credentials: true
 }));
 
