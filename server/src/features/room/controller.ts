@@ -18,19 +18,6 @@ export async function allRooms(req:Request,res:Response) {
 
 export async function findRoom(req:Request,res:Response) {
     try{
-
-        const authHeader = req.headers.authorization
-        const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null
-         if (!token) {
-            return res.status(401).json({ error: "トークンがありません。" })
-        }
-        const jwtSecret = process.env.JWT_SECRET
-        if (!jwtSecret) {
-            return res.status(500).json({ error: "JWT_SECRETが設定されていません。" })
-        }
-        const payload = jwt.verify(token, jwtSecret) 
-        console.log("payoladについて？",payload)
-
          const {name} = req.body
           const room = await findFirst(name)
          res.send({room:room?.name})

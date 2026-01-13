@@ -8,10 +8,6 @@ type Props = {
 export const SearchRoomModal:React.FC<Props> = ({onClose}) => {
     const [roomName,setRoomName] = useState("")
 
-
-    // token
-    const token = localStorage.getItem("accessToken")
-
     const  changeRoomName = (e:React.ChangeEvent<HTMLInputElement>) => {
         setRoomName(e.target.value)
     }
@@ -19,7 +15,7 @@ export const SearchRoomModal:React.FC<Props> = ({onClose}) => {
     const SearchRoom = async () => {
         const res = await fetch("http://localhost:3000/api/room/findRoom",{
         method:"POST",
-        headers:{"Content-Type":"application/json","Authorization": `Bearer ${token}`},
+        headers:{"Content-Type":"application/json"},
         body:JSON.stringify({name:roomName})
     }
 )
