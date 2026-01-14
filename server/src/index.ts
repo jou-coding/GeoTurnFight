@@ -5,6 +5,8 @@ import cors from "cors"
 import { authRouter } from "./features/auth/routes.js";
 import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./socket/server.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config()
 // Expressアプリの作成
@@ -15,7 +17,7 @@ const server = http.createServer(app)
 app.use(Express.static("public"))
 
 app.use(cors({
-  origin: ["http://localhost:5173","https://geoturnfight.onrender.com"],
+  origin: ["https://geoturnfight.onrender.com"],
   credentials: true
 }));
 
@@ -30,6 +32,16 @@ app.use("/api/room",roomRouter)
 export const io = initSocketServer(server)
 
 app.set("io",io)
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(Express.static(path.join(__dirname, "../../client/dist")));
+
+app.get("/", (_req, res) => {
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
+
 
 const PORT = process.env.PORT || 4000;
 
