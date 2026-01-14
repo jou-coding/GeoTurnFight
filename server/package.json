@@ -7,9 +7,8 @@
   "scripts": {
     "postinstall": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "npx tsc -p tsconfig.json && node dist/index.js",
-    "dev": "run-p backend",
-    "server":"npm install"
+    "dev": "npx tsc -p tsconfig.json && node dist/index.js",
+    "server": "npm install"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,6 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/swagger-ui-express": "^4.1.8",
-    "npm-run-all": "^4.1.5",
     "prisma": "^6.18.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
