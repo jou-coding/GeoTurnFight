@@ -14,11 +14,6 @@ model User{
   password String
 }
 
-model Contry{
-  id Int @id @default(autoincrement())
-  name String
-}
-
 model Room{
   id Int @id @default(autoincrement())
   name String
