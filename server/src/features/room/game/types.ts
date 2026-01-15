@@ -15,3 +15,13 @@ export type RoomState = {
   userNames: string[];
   game: GameState;
 };
+
+export type Room = {
+    id: number;
+    code: string;
+    nameJa: string;
+    nameEn: string;
+    isOecd: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+}

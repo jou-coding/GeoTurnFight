@@ -1,4 +1,4 @@
-import type { PlayerId, RoomState } from "./types.js";
+import type { PlayerId, RoomState,Room } from "./types.js";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -8,7 +8,7 @@ initCountryCache()
 
 export async function initCountryCache() {
   validCountrySet = new Set(
-    (await prisma.country.findMany()).map(c => c.nameJa)
+    (await prisma.country.findMany()).map((c:Room) => c.nameJa)
   );
 }
 
