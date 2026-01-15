@@ -1,4 +1,5 @@
-import { PrismaClient } from '../../../generated/prisma/client.js'
+import { PrismaClient } from "@prisma/client";
+
 
 // プリズマクライアントの作成
 const prisma = new PrismaClient()
