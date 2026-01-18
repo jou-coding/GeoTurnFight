@@ -14,7 +14,7 @@
     "db:migrate:deploy": "npx prisma migrate deploy",
     "db:seed": "npx prisma db seed",
 
-   "setup": "npm run db:migrate:deploy && npm run prisma:generate && npm run db:seed",
+   "setup": "npm run db:migrate:deploy && npm run prisma:generate",
 
 
 
