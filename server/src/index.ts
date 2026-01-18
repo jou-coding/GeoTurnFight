@@ -17,7 +17,7 @@ const server = http.createServer(app)
 app.use(Express.static("public"))
 
 app.use(cors({
-  origin: ["https://geoturnfight.onrender.com"],
+  origin: ["https://geo-turn-fight.vercel.app/"],
   credentials: true
 }));
 
