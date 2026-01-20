@@ -7,6 +7,7 @@ import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./socket/server.js";
 
 
+
 dotenv.config()
 // Expressアプリの作成
 const app = Express();
@@ -16,7 +17,7 @@ const server = http.createServer(app)
 app.use(Express.static("public"))
 
 app.use(cors({
-  origin: ["https://geo-turn-fight.vercel.app/"],
+  origin: [`${process.env.CORS_ORIGIN}`],
   credentials: true
 }));
 
