@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import {API_BASE_URL} from "../../config/api"
 
 const LoginUser:React.FC = () => {
+    
     const navigate = useNavigate()
 
          const [name_value,nameSetValue] = useState("") 
@@ -16,7 +18,8 @@ const LoginUser:React.FC = () => {
         }
  
     const handleLogin =async() => {
-        const res = await fetch("http://localhost:3000/api/auth/login",{
+        console.log(API_BASE_URL)
+        const res = await fetch(`${API_BASE_URL}/api/auth/login`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({username:name_value,password:password_value})
