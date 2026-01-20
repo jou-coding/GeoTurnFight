@@ -18,7 +18,6 @@ const LoginUser:React.FC = () => {
         }
  
     const handleLogin =async() => {
-        console.log(API_BASE_URL)
         const res = await fetch(`${API_BASE_URL}/api/auth/login`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
