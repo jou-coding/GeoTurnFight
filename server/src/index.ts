@@ -35,8 +35,16 @@ export const io = initSocketServer(server)
 
 app.set("io",io)
 
-const HOST:string = process.env.HOST || "127.0.0.1"
-const PORT:number = Number(process.env.PORT) || 3000;
+const isProd = process.env.NODE_ENV === "production";
+
+const PORT_RAW = process.env.PORT;
+const PORT = PORT_RAW ? Number(PORT_RAW) : NaN;
+
+if (!Number.isFinite(PORT) || PORT <= 0) {
+  throw new Error(`Invalid PORT: ${PORT_RAW}`);
+}
+
+const HOST = process.env.HOST ?? (isProd ? "0.0.0.0" : "127.0.0.1");
 
 server.listen({port:PORT,host:HOST},() => {
    console.log(`Server running on port ${PORT}:${HOST}`);
