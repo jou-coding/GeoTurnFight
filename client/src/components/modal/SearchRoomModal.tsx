@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Button from "../Button"
+import { API_BASE_URL } from "../../config/api"
 
 type Props = {
     onClose:() =>  void
@@ -13,7 +14,7 @@ export const SearchRoomModal:React.FC<Props> = ({onClose}) => {
     }
 
     const SearchRoom = async () => {
-        const res = await fetch("http://localhost:3000/api/room/findRoom",{
+        const res = await fetch(`${API_BASE_URL}/api/room/findRoom`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({name:roomName})
