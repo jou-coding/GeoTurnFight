@@ -11,6 +11,8 @@ import { initSocketServer } from "./socket/server.js";
 dotenv.config()
 // Expressアプリの作成
 const app = Express();
+//1段分のプロキシを信頼する
+app.set("trust proxy", 1);
 // HTTPサーバーを作成し、Expressを使う
 const server = http.createServer(app)
 // 静的ファイル（HTML/CSS/JSなど)を配信
@@ -33,12 +35,10 @@ export const io = initSocketServer(server)
 
 app.set("io",io)
 
+const HOST:string = process.env.HOST || "127.0.0.1"
+const PORT:number = Number(process.env.PORT) || 3000;
 
-const PORT = process.env.PORT || 4000;
-
-
-server.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`);
-  console.log(`WebSocket available at ws${process.env.CORS_ORIGIN}:${PORT}`);
+server.listen({port:PORT,host:HOST},() => {
+   console.log(`Server running on port ${PORT}:${HOST}`);
 });
 
