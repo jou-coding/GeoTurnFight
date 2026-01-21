@@ -2,6 +2,7 @@ import {  useState } from "react"
 
 import { Link } from "react-router-dom"
 import { useSocket } from "../../pages/AppProvider"
+import { API_BASE_URL } from "../../config/api"
 
 
 type Props = {
@@ -35,7 +36,7 @@ export const CreateRoomModal:React.FC<Props> = ({onClose}) => {
             })
            
     
-            const res = await fetch("http://localhost:3000/api/room/createRoom",{
+            const res = await fetch(`${API_BASE_URL}/api/room/createRoom`,{
                 method:"POST",
                 headers:{"Content-Type":"application/json",
                      "Authorization": `Bearer ${token}`
