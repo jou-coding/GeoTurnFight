@@ -1,6 +1,6 @@
 import Expres from "express"
 import {createRoom, allRooms, findRoom,getRoomId} from "./controller.js"
-import { authMiddleware } from "../../middlewares/authMiddleware.js"
+import { authMiddleware } from "../../infra/middlewares/authMiddleware.js"
 
 export const roomRouter = Expres.Router()
 
