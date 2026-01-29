@@ -15,8 +15,6 @@
 
    "setup": "npm run db:migrate:deploy && npm run prisma:generate",
 
-
-
     "dev":"tsc -p tsconfig.json && node dist/index.js"
   },
   "keywords": [],
