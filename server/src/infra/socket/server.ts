@@ -1,7 +1,7 @@
 import * as http from "http";
 import { Server } from "socket.io"
-import { registerRoomHandler } from "../features/room/game/roomHandler.js";
-import { registerGameHandler } from "../features/room/game/gameHandler.js";
+import { registerRoomHandler } from "../../features/room/game/roomHandler.js";
+import { registerGameHandler } from "../../features/room/game/gameHandler.js";
 
 export function initSocketServer(server:http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>){
 

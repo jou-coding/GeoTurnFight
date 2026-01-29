@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors"
 import { authRouter } from "./features/auth/routes.js";
 import { roomRouter } from "./features/room/routes.js";
-import { initSocketServer } from "./socket/server.js";
+import { initSocketServer } from "./infra/socket/server.js";
 
 
 
