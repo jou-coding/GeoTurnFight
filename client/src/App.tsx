@@ -1,5 +1,5 @@
 import { BrowserRouter,Routes,Route} from "react-router-dom";
-import ResisterUser from "./pages/Auth/ResisterUser";
+import RegisterUser from "./pages/Auth/RegisterUser";
 import LoginUser from "./pages/Auth/LoginUser";
 import Room from "./pages/Room/Room";
 import Match from "./pages/Room/Match";
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginUser />} />
-          <Route path="/resisteruser" element={<ResisterUser />} />
+          <Route path="/registerUser" element={<RegisterUser />} />
           <Route path="/room" element={<Room />} />
           <Route path="/match" element={<Match />} />
           <Route path="/CountryBattleGame" element={<CountryBattleGame />}/>

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { API_BASE_URL } from "../../config/api"
 import RegisterButton from "../../components/Button"
 
-const ResisterUser:React.FC = () => {
+const registerUser:React.FC = () => {
     const [name_value,setNameValue] = useState("")
     const [password_value,setPasswordValue] = useState("")
 
@@ -41,4 +41,4 @@ const ResisterUser:React.FC = () => {
     )
 }
 
-export default ResisterUser
+export default registerUser

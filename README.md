@@ -28,7 +28,7 @@
 
 ## 画面フロー
 1. ログイン画面 (`/`)
-2. 新規登録 (`/resisteruser`)
+2. 新規登録 (`/registerUser`)
 3. ルーム作成/参加 (`/room`)
 4. マッチング (`/match`)
 5. ゲーム本編 (`/CountryBattleGame`)

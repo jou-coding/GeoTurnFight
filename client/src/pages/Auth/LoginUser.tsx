@@ -49,7 +49,7 @@ const LoginUser:React.FC = () => {
                         className="w-full  bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition">送信</button>
                     </form>
                     <p className="text-center test-sm text-gray-500 mt-4">アカウントがありませんか？
-                        <Link to="/resisteruser" className="text-blue-500 hover:underline">新規登録</Link>
+                        <Link to="/registerUser" className="text-blue-500 hover:underline">新規登録</Link>
                     </p>
                 </div>
             </div>
