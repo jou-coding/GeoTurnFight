@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../pages/AppProvider";
 
+// 型定義
 export type PlayerId = "player1" | "player2" | undefined;
 
 type UseCountryBattleGameParams = {
@@ -12,8 +13,10 @@ type UseCountryBattleGameParams = {
   currentUserName: string;
 };
 
+// カスタムフック本体
 export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryBattleGameParams) {
 
+  // 引数の分解
   const {
   player1Name,
   player2Name,
@@ -21,18 +24,23 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   roomName,
   currentUserName,
 } = useCountryBattleGameParamsData
+
+// Socket インスタンス取得
   const socket = useSocket();
+  // 自分のプレイヤーID
   const myPlayerId = playerId
 
+  // state管理
   const [inputCountryName, setInputCountryName] = useState("");
   const [countryHistory, setCountryHistory] = useState<string[]>([]);
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
   const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
   const [currentPlayerId,setCurrentPlayerId] = useState<PlayerId>(undefined)
 
+  // Socketイベント登録
   useEffect(() => {
 
-    // 今の手番（player1 / player2）
+    // 現在の手番（player1 / player2）
     const handleTurnPlayerIdUpdate = (turnPlayerId: PlayerId) => {
       console.log("current turn playerId:", turnPlayerId);
       // 必要ならここで PlayerId ベースの状態も持てる
@@ -74,6 +82,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     socket.on("turn", handleTurnFlagUpdate);
     socket.on("historyUpdate", handleCountryHistoryUpdate);
 
+    // クリーンアップ（イベント解除）
     return () => {
       socket.off("connect", handleSocketConnect);
       socket.off("connect_error", handleSocketConnectError);
@@ -86,24 +95,25 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     };
   }, [socket, currentUserName, player1Name, player2Name]);
 
-  // 国名をサーバーに送信してチェックしてもらう
+  // 国名送信処理
   const handleSubmitCountry = () => {
     console.log("inputCountryName:", inputCountryName);
     console.log("myPlayerId:", myPlayerId);
     
-
     socket.emit("checkCountry", {
       roomName:roomName,
       player: myPlayerId,
       country: inputCountryName,
     });
-
+    // 入力欄リセット
     setInputCountryName("");
   };
 
+  // モーダル制御
   const openSurrenderModal = () => setIsSurrenderModalOpen(true);
   const closeSurrenderModal = () => setIsSurrenderModalOpen(false);
 
+  // 返却データまとめ
  const matchGameData = {
   // 状態
   inputCountryName,
