@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import Button from "../../components/Button"
 import { API_BASE_URL } from "../../config/api"
+import RegisterButton from "../../components/Button"
 
 const ResisterUser:React.FC = () => {
     const [name_value,setNameValue] = useState("")
@@ -32,7 +32,7 @@ const ResisterUser:React.FC = () => {
                     <form className="space-y-4">
                         <input type="name" value={name_value} onChange={nameChange} placeholder="名前" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
                         <input type="password"  value={password_value} onChange={passwordChange} placeholder="パスワード" className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400" />
-                       <Button name="/room" buttonName="登録" func={RegisterUser}/>
+                       <RegisterButton name="/room" buttonName="登録" func={RegisterUser}/>
                     </form>
                 </div>
             </div>

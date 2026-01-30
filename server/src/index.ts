@@ -6,8 +6,6 @@ import { authRouter } from "./features/auth/routes.js";
 import { roomRouter } from "./features/room/routes.js";
 import { initSocketServer } from "./infra/socket/server.js";
 
-
-
 dotenv.config()
 // Expressアプリの作成
 const app = Express();

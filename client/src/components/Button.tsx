@@ -7,7 +7,7 @@ type ButtonProps = {
   func?:() => Promise<Response> |void
 };
 
-const  Button:React.FC<ButtonProps> =(props) => {
+const  RegisterButton:React.FC<ButtonProps> =(props) => {
   
 const goto = useHandleNavigate()
 
@@ -36,6 +36,6 @@ const goto = useHandleNavigate()
     )
 }
 
-export default  Button
+export default  RegisterButton
 
 
