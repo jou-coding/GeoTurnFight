@@ -1,5 +1,5 @@
 import React from "react"
-import useHandleNavigate from "../hooks/useHandleNavigate"
+import useHandleNavigate from "../../hooks/useHandleNavigate"
 
 
 type ButtonProps = {
@@ -15,15 +15,13 @@ const goto = useHandleNavigate()
   const handleClick = async () => {
     if (props.func) {
       const res = await props.func(); // async対応
-      if (res && res.ok ) { // 成功したら遷移
-          console.log("通っている")
+      if (res && res.ok ) { 
           goto(props.name);
       } else {
         console.error("登録に失敗しました:", res);
       }
     } 
   };
-
     return(
          <button type="button" 
                         onClick={() => handleClick()}

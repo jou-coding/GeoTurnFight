@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { API_BASE_URL } from "../../config/api"
-import RegisterButton from "../../components/Button"
+import RegisterButton from "../../components/button/RegisterButton"
 
 const registerUser:React.FC = () => {
     const [name_value,setNameValue] = useState("")

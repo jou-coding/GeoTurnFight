@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Button from "../Button"
+import Button from "../button/RegisterButton"
 import { API_BASE_URL } from "../../config/api"
 
 type Props = {
