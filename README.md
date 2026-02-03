@@ -7,6 +7,8 @@
   - [目次](#目次)
   - [機能概要](#機能概要)
   - [画面フロー](#画面フロー)
+  - [機能マップ](#機能マップ)
+  - [管理フロー図](#管理フロー図)
   - [技術スタック](#技術スタック)
   - [ディレクトリ構成](#ディレクトリ構成)
   - [セットアップ](#セットアップ)
@@ -33,6 +35,45 @@
 4. マッチング (`/match`)
 5. ゲーム本編 (`/CountryBattleGame`)
 
+## 機能マップ
+### フロントエンド（client/src）
+- `App.tsx`：画面ルーティングの入口（ログイン/登録/ルーム/マッチ/ゲーム）。  
+- `pages/Auth/`：ログイン/登録ページ。  
+- `pages/Room/`：ルーム作成・参加、マッチング、ゲーム画面。  
+- `hooks/`：Socket 連携やゲーム進行ロジック。  
+- `components/`：ボタン、カード、モーダルなど UI 部品。  
+- `lib/socket.ts`：Socket.IO クライアント初期化。  
+
+### バックエンド（server/src）
+- `index.ts`：Express と Socket.IO の起点。  
+- `features/auth/`：登録/ログイン（controller/service/repository）。  
+- `features/room/`：ルーム作成・検索・一覧（controller/repository）。  
+- `features/room/game/`：ゲーム参加/ターン/履歴の Socket 連携（handlers/roomStore）。  
+- `infra/socket/`：Socket.IO サーバ初期化。  
+
+## 管理フロー図
+### 認証フロー（登録/ログイン）
+```mermaid
+flowchart TD
+  UI[ログイン/登録画面] -->|POST /api/auth/*| AuthController[auth controller]
+  AuthController --> AuthService[auth service]
+  AuthService --> AuthRepo[auth repository]
+  AuthRepo --> DB[(User DB)]
+  DB --> AuthController
+  AuthController --> UI
+```
+
+### ルーム参加〜ゲーム進行フロー（Socket）
+```mermaid
+flowchart TD
+  RoomUI[ルーム/マッチ画面] -->|socket.emit joinGame| RoomHandler[roomHandler]
+  RoomHandler --> RoomStore[roomStore]
+  RoomHandler -->|emit matchUpdate/assignPlayer/turnUpdate| MatchUI[マッチ画面]
+  GameUI[ゲーム画面] -->|socket.emit checkCountry| GameHandler[gameHandler]
+  GameHandler --> RoomStore
+  GameHandler -->|emit turnUpdate/historyUpdate| GameUI
+```
+
 ## 技術スタック
 **Frontend**
 - React + Vite
@@ -58,8 +99,7 @@
 ├── server/                # バックエンド（Express + Prisma）
 │   └── src/
 │       ├── features/       # auth/room など機能別
-│       ├── socket/         # Socket.IO 初期化
-│       └── openapi/        # Swagger定義
+│       └── infra/          # Socket.IO 初期化
 └── package.json           # ルートのスクリプト（client/server 起動）
 ```
 
