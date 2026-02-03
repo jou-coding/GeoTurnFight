@@ -129,27 +129,35 @@ npm -v
 詳細なリクエスト/レスポンスは、`server/src/openapi/openapi.yml` を参照してください。
 
 ### 認証
-- `POST /api/auth/register`
-- `POST /api/auth/login`
+| メソッド | パス | 説明 |
+| --- | --- | --- |
+| POST | `/api/auth/register` | ユーザー登録 |
+| POST | `/api/auth/login` | ログイン |
 
 ### ルーム
-- `POST /api/room/createRoom`
-- `GET /api/room/allRooms`
-- `POST /api/room/findRoom`
-- `GET /api/room/getRoomId?name=roomA`
+| メソッド | パス | 説明 |
+| --- | --- | --- |
+| POST | `/api/room/createRoom` | ルーム作成 |
+| GET | `/api/room/allRooms` | ルーム一覧取得 |
+| POST | `/api/room/findRoom` | ルーム検索 |
+| GET | `/api/room/getRoomId?name=roomA` | ルームID取得 |
 
 ## Socket.IO イベント
 **クライアント → サーバ**
-- `joinGame`: `{ roomName, userName }`
-- `checkCountry`: `{ roomName, player, country }`
+| イベント名 | ペイロード | 説明 |
+| --- | --- | --- |
+| `joinGame` | `{ roomName, userName }` | ルーム参加 |
+| `checkCountry` | `{ roomName, player, country }` | 国名チェック |
 
 **サーバ → クライアント**
-- `assignPlayer`: `"player1" | "player2"`
-- `matchUpdate`: `{ player1, player2 }`
-- `toGameButton`: `{ player2 }`
-- `turnUpdate`: `"player1" | "player2"`
-- `historyUpdate`: `{ countryNames: string[] }`
-- `errorMessage`: string
+| イベント名 | ペイロード | 説明 |
+| --- | --- | --- |
+| `assignPlayer` | `"player1" \| "player2"` | プレイヤー割り当て |
+| `matchUpdate` | `{ player1, player2 }` | マッチング更新 |
+| `toGameButton` | `{ player2 }` | ゲーム開始ボタン表示 |
+| `turnUpdate` | `"player1" \| "player2"` | ターン更新 |
+| `historyUpdate` | `{ countryNames: string[] }` | 国名履歴更新 |
+| `errorMessage` | `string` | エラー通知 |
 
 ## ゲームルール
 - 国名はDBに登録された国のみ有効。
