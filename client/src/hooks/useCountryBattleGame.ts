@@ -79,6 +79,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     // 結果の送信
     const handleResult = (result:string) => {
       setResult(result)
+      setIsSurrenderModalOpen(true)
     }
 
     socket.on("connect", handleSocketConnect);
@@ -125,7 +126,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   const openSurrenderModal = () =>{
     socket.emit("loseGame",{roomName,playerId,player1Name,
   player2Name,currentUserName})
-    setIsSurrenderModalOpen(true)
+
   } ;
   
 
