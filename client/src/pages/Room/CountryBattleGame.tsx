@@ -72,12 +72,7 @@ const CountryBattleGamePage: React.FC = () => {
         </div>
       </div>
       {isSurrenderModalOpen && (
-        <HaibokuButton
-          user01={player1Name}
-          user02={player2Name}
-          initialCurrentPlayerId={initialCurrentPlayerId}
-          currentPlayerId={currentPlayerId}
-        />
+        <HaibokuButton/>
       )}
     </div>
   );
