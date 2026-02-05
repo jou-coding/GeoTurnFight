@@ -32,6 +32,7 @@ const CountryBattleGamePage: React.FC = () => {
     countryHistory,
     isSurrenderModalOpen,
     currentPlayerId,
+    result,
     setInputCountryName,
     handleSubmitCountry,
     openSurrenderModal,
@@ -72,7 +73,7 @@ const CountryBattleGamePage: React.FC = () => {
         </div>
       </div>
       {isSurrenderModalOpen && (
-        <HaibokuButton/>
+        <HaibokuButton user={myName} result={result}/>
       )}
     </div>
   );

@@ -37,6 +37,9 @@ export function registerGameHandler(
     }
 
     pushCountryAndSwitchTurn(room, country);
+    
+    // test soon delete
+    io.to(roomName).emit("result","勝者")
 
     // ✅ 通知は room に対して行う（全員同期）
     io.to(roomName).emit("turnUpdate", room.game.turnPlayerId);

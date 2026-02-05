@@ -36,6 +36,8 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   const [isPlayer1Turn, setIsPlayer1Turn] = useState(true);
   const [isSurrenderModalOpen, setIsSurrenderModalOpen] = useState(false);
   const [currentPlayerId,setCurrentPlayerId] = useState<PlayerId>(undefined)
+  // result state
+  const [result,setResult] = useState<string>("引き分け")
 
   // Socketイベント登録
   useEffect(() => {
@@ -74,6 +76,11 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
       setCountryHistory(payload.countryNames);
     };
 
+    // 結果の送信
+    const handleResult = (result:string) => {
+      setResult(result)
+    }
+
     socket.on("connect", handleSocketConnect);
     socket.on("connect_error", handleSocketConnectError);
     socket.on("disconnect", handleSocketDisconnect);
@@ -81,6 +88,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
     socket.on("turnUpdate", handleTurnPlayerIdUpdate);
     socket.on("turn", handleTurnFlagUpdate);
     socket.on("historyUpdate", handleCountryHistoryUpdate);
+    socket.on("result",handleResult)
 
     // クリーンアップ（イベント解除）
     return () => {
@@ -91,6 +99,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
       socket.off("turnUpdate", handleTurnPlayerIdUpdate);
       socket.off("turn", handleTurnFlagUpdate);
       socket.off("historyUpdate", handleCountryHistoryUpdate);
+      socket.off("result",handleResult)
       console.log("cleanup: socket イベント解除");
     };
   }, [socket, currentUserName, player1Name, player2Name]);
@@ -123,6 +132,7 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   player1Name,
   player2Name,
   currentPlayerId,
+  result,
 
   // setter / handler
   setInputCountryName,
