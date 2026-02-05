@@ -38,11 +38,26 @@ export function registerGameHandler(
 
     pushCountryAndSwitchTurn(room, country);
     
-    // test soon delete
-    io.to(roomName).emit("result","勝者")
+
 
     // ✅ 通知は room に対して行う（全員同期）
     io.to(roomName).emit("turnUpdate", room.game.turnPlayerId);
     io.to(roomName).emit("historyUpdate", { countryNames: room.game.submittedCountryNames });
   });
+
+  // result logic
+  socket.on("loseGame",({ roomName, player,player1Name,
+  player2Name,currentUserName }: { roomName: string; player: PlayerId,player1Name:string,
+  player2Name:string,currentUserName:string}) => {
+
+    const winnerPlayerName = currentUserName === player1Name ? player2Name :player1Name
+    // lose logic
+    // const winnerPlayer = player === "player1" ? "player2" : "player1"
+
+    // 勝者:winnerPlayer
+
+        // test soon delete
+    io.to(roomName).emit("result",winnerPlayerName)
+
+  })
 }

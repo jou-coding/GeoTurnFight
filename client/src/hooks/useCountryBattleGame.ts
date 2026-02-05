@@ -119,8 +119,15 @@ export function useCountryBattleGame(useCountryBattleGameParamsData: UseCountryB
   };
 
   // モーダル制御
-  const openSurrenderModal = () => setIsSurrenderModalOpen(true);
   const closeSurrenderModal = () => setIsSurrenderModalOpen(false);
+
+  // 改造モーダル制御
+  const openSurrenderModal = () =>{
+    socket.emit("loseGame",{roomName,playerId,player1Name,
+  player2Name,currentUserName})
+    setIsSurrenderModalOpen(true)
+  } ;
+  
 
   // 返却データまとめ
  const matchGameData = {
