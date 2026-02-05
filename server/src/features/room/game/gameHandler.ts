@@ -51,6 +51,7 @@ export function registerGameHandler(
   player2Name:string,currentUserName:string}) => {
 
     const winnerPlayerName = currentUserName === player1Name ? player2Name :player1Name
+    
     io.to(roomName).emit("result",winnerPlayerName)
 
   })

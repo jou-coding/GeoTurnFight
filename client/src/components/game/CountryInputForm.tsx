@@ -18,22 +18,25 @@ const CountryInputForm: React.FC<CountryInputFormProps> = ({
       <input
         type="text"
         placeholder="国名を入力"
-        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+        className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-400 "
         value={inputCountryName}
         onChange={(e) => onChangeCountryName(e.target.value)}
       />
-      <button
-        className="p-3 bg-gray-500 rounded-lg hover:bg-gray-700 text-white"
+      <div className="flex gap-4">
+        <button
+        className="flex-1 p-3 bg-gray-500 rounded-lg hover:bg-gray-700 text-white"
         onClick={onSubmitCountry}
       >
         決定
       </button>
       <button
-        className="p-3 bg-blue-300 rounded-lg"
+        className="flex-1 p-3 bg-blue-300 rounded-lg"
         onClick={onOpenSurrenderModal}
       >
         降参
       </button>
+      </div>
+      
     </>
   );
 };
